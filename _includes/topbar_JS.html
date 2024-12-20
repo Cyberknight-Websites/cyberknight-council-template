@@ -1,0 +1,48 @@
+<script>
+  window.addEventListener('load', mobileMenuInitializer);
+
+  let menubutton = document.querySelector('#topbar-menu');
+  let menubutton_img = menubutton.querySelector('img');
+  let topbar_bottom_row = document.querySelector('.topbar-bottom-row');
+  let topbar = document.querySelector('.topbar');
+  let showing_topbar_bottom_row = false;
+  var isDesktop = window.matchMedia("(min-width: 800px) and (orientation: landscape) and (hover: hover) and (pointer: fine)")
+  const x_svg_url = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/xmark.svg";
+  const menubars_svg_url = "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/bars.svg";
+  function mobileMenuInitializer() {
+    if (isDesktop.matches) {expandtopbar(); }
+    menubutton.addEventListener('click', () => {
+      if (showing_topbar_bottom_row) {
+        hidetopbar();
+      }
+      else {  
+        expandtopbar();
+      }
+    });
+  }
+
+  function expandtopbar() {
+    showing_topbar_bottom_row = true;
+    // topbar_bottom_row.style.display = "flex";
+    menubutton_img.src = x_svg_url;
+    topbar.classList.add("topbar-expand");
+  }
+
+  function hidetopbar() {
+    showing_topbar_bottom_row = false;
+    // topbar_bottom_row.style.display = "none"; 
+    if (menubutton_img.src !== menubars_svg_url){
+      menubutton_img.src = menubars_svg_url;
+    }
+    topbar.classList.remove("topbar-expand");
+  }
+
+  window.addEventListener('scroll', () => {
+    hidetopbar();
+    // Check if user scrolls to top
+    if ((window.pageYOffset === 0) && (isDesktop.matches)) {
+       expandtopbar();
+    }
+  });
+
+</script>

@@ -1,0 +1,36 @@
+---
+layout: default
+---
+
+  <h1>Posts Archive</h1>
+
+  <!-- <ul>
+    <h2>Tags</h2>
+    <ul class="tag-ul">
+      {% assign sorted_site_tags = site.tags | sort %}
+      {% for tags in sorted_site_tags %}
+        {% assign tag = tags[0] %}
+        <li class="tag"><a href="/tag/{{ tag }}">{{ tag | replace: "-", " " }}</a></li>
+      {% endfor %}
+    </ul>  
+  </ul> -->
+
+  <!-- <div style="display: flex; justify-content: space-evenly;">
+    <h2 style="padding-inline-start: 0rem;"><a class="button random" href="#100" onclick="randomSite(); return false;">Read a Random Post</a></h2>
+    <h2><a href="/feed.xml" style="text-decoration-color: #F99A39;">RSS Feed</a></h2>
+  </div> -->
+
+  <script>
+  function randomSite() {
+    const sites = document.getElementsByClassName('post_link')
+
+    if (sites.length > 0) {
+      const choiceIndex = Math.floor(Math.random() * sites.length)
+      window.location.href = sites[choiceIndex].attributes.href.value
+    }
+  }
+  </script>
+
+<div>
+  {% include post_list.html show_year=true %}
+</div>

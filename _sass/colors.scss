@@ -1,0 +1,83 @@
+html {
+    --bg: #f3f4f6;
+    --bg-secondary: #f3f4f6;
+    --bg-secondary-opaque: #f3f4f6;
+    --headings: #112764;
+    --text: #374151;
+    --highlight: #dedede;
+    --code-text: black;
+    --tag: #dedede;
+    // --w-mobile-background: #f3f4f6;
+    --w-mobile-background: rgba(255, 255, 255, 0.8);
+    --w-desktop-background: rgba(255, 255, 255, 0.8);
+    --background-color-layer: white;
+    --scrollbar-foreground: #F1B218;
+    --scrollbar-background: #f3f4f6;
+    --shadow-color: #cfd2e2;
+    --card-color: #ffffff;
+
+    // topbar
+    --topbar-background: #ffffff;
+    --topbar-border: #000000;
+    --topbar-text: white;
+    --topbar-link-background: #903d22;
+    --topbar-link-background-border: #7c261d;
+    --topbar-button-border: black;
+
+    // --topbar-text: #000000;
+
+    // link colors
+    --link-text: black;
+    // --link-underline: #D94239;
+    --link-underline: #7c261d;
+
+    --button-hover-color: #0000003b;
+
+    #topbar-menu {
+      img {
+        // filter: invert(0%) sepia(100%) saturate(7500%) hue-rotate(184deg) brightness(110%) contrast(113%);
+        color: white;
+      }
+    }
+}
+// -------------- THEME SWITCHER -------------- //
+@mixin dark-appearance {
+  html, body  {
+      --headings: #FFF;
+      --highlight: #a9a9a9;
+      --bg: #112764;
+      --bg-secondary: #323945;
+      // --bg-secondary-opaque: #2e2f32;
+      --bg-secondary-opaque: #130f1d;
+      --text: #adb5bd;
+      --code-text: white;
+      --tag: #323945;
+      // --w-mobile-background: #112764;
+      --w-mobile-background: rgba(17, 39, 100, 0.8);
+      --w-desktop-background: rgba(17, 39, 100, 0.9);
+      --background-color-layer: #112764;
+      --scrollbar-foreground: #F1B218;
+      --scrollbar-background: #112764;
+      --shadow-color: #0a0a0b;
+      --card-color: #161616;
+
+      // topbar
+      --topbar-background: #F1B218;
+      --topbar-border: #F1B218;
+      --topbar-text: white;
+      --topbar-button-border: white;
+
+      // link colors
+      --link-text: #FFF;
+      --link-underline: #7c261d;
+
+      --button-hover-color: #ffd66d;
+
+      #topbar-menu {
+        img {
+          filter: invert(100%) sepia(94%) saturate(0%) hue-rotate(309deg) brightness(104%) contrast(102%);
+        }
+      }
+  };
+}
+html[data-theme="dark"] { @include dark-appearance; }

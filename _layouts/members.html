@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<h1>Members</h1>
+
+<h2>Officers (2024-2025)</h2>
+<div class="officer-container">
+  {% for officer in site.data.all_council_info_data.council_officers %}
+  <div class="eboard-member">
+    <picture>
+      {% assign img_src = officer.member_photo_url %}
+      {% if img_src == null || img_src == "" %}
+        <img src="/assets/svg/koc_crest.svg" alt="The Knights of Columbus logo"/>
+      {% else %}
+      <img class="portrait" src="{{ img_src }}" alt="A headshot of {{ officer.officer_position }} {{ officer.officer_name }}"/>
+      {% endif %}
+    </picture>
+    <h3>{{ officer.officer_position }}</h3>
+    <p>{{ officer.officer_name }}</p>
+  </div>
+  {% endfor %}
+</div>

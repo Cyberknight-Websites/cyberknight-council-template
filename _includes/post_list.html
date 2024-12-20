@@ -1,0 +1,25 @@
+{% assign sorted_posts = site.posts | sort: 'post_created_at' | reverse %}
+{% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
+
+<div class="posts-list-container">
+{% for post in sorted_posts limit:include.limit %}
+    <div class="posts-list-item">
+        <div class="post-list-item-date">
+            <p>{{ post.post_created_at | date: site.posts_date_format }}</p>
+        </div>
+        <div class="post-list-item-inner">
+            <div class="post-list-item-inner-info">
+                <h3>{{ post.title }}</h3>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <p><strong>Created By:</strong> {{ post.post_created_by }}</p>
+                </div>
+                <!-- print content of post -->
+                <p>{{ post.content | strip_html | truncatewords: 24 }}</p>
+            </div>
+            <div class="post-list-item-inner-links">
+                <a href="{{ post.url | relative_url }}">Read More</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+</div>

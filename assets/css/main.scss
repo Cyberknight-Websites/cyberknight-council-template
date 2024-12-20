@@ -1,0 +1,22 @@
+---
+---
+
+@import "animation";
+@import "moonwalk";
+@import "top-bar";
+@import "scrollbar";
+@import "dialog";
+@import "text-font";
+@import "desktop";
+@import "colors";
+@import "ios";
+@import "android";
+@import "links";
+
+{% assign w_desktop_width = site.layout.w_desktop_width %}
+
+@media (min-width: 800px) and (orientation: landscape) and (hover: hover) and (pointer: fine) {
+    .w {
+        max-width: {{w_desktop_width}}vw;
+    }
+}

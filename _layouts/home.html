@@ -1,0 +1,99 @@
+---
+layout: default
+---
+
+<div class="homepage_logo">
+  <img id="homepage_kofc_logo" alt="the logo for this council" src="{{ site.council_logo_url }}"/>
+</div>
+<h1 id="homepage_title_text">{{site.council_name}} Council #{{site.council_number}}</h1>
+<div style="margin: 0 auto;" >
+  <p class="homepage-tagline">"{{ site.council-tagline }}"</p>
+  <p style="text-align: center; max-width: 34rem; margin: 0 auto;">{{ site.description }}</p>
+</div>  
+
+{% if site.homepage.parishes.show_section %}
+  {% include calendar_list.html type_to_show="upcoming" limit=3 %}
+{% endif %}
+
+<h2>Latest Posts</h2>
+{% include post_list.html type_to_show="upcoming" limit=2 %}
+
+<!-- <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+  <div class="homepage_flex_divs_posts limit-homepage-posts">
+    <h2>Latest Posts</h2>
+    {% assign sorted_posts = site.posts | sort: 'date' | reverse %}
+    {% if sorted_posts.size > 0 %}
+      <ul class="post-list-container">
+      {% for post in sorted_posts limit:3 %}
+        <li class="post-list-item">
+          <a class="post_link" href="{{ post.url | relative_url }}">{{ post.title }}</a><br>
+          {{ post.date | date: site.theme_config.date_format }}
+          <ul class="tag-ul">
+            {% assign sorted_tags = post.tags | sort %}
+            {% for tag in sorted_tags %}
+              <li class="tag"><a href="/tag/{{ tag }}">{{ tag | replace: "-", " " }}</a></li>
+            {% endfor %}
+          </ul>
+          <p> {{ post.description }} </p>
+        </li>
+      {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div> -->
+
+{% if site.homepage.parishes.show_section %}
+  {% if site.data.all_council_info_data.council_parishes.size == 1 %}
+    <h2>Our Parish</h2>
+  {% else %}
+    <h2>Our Parishes</h2>
+  {% endif %}
+  {% if site.homepage.parishes.show_sentence %}
+    {% if site.data.all_council_info_data.council_parishes.size == 1 %}
+      <p>Our council serves the parish of <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">{{ site.data.all_council_info_data.council_parishes[0].parish_name }}</a>.</p>
+    {% else %}
+      <p>Our council serves the parishes of:
+        {% for parish in site.data.all_council_info_data.council_parishes %}
+          {% if forloop.last %}
+            and <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">{{ parish.parish_name }}</a>.
+          {% else %}
+            <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">{{ parish.parish_name }}</a>,
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+  {% endif %}
+
+  <div class="homepage_parish_info">
+    {% if site.homepage.parishes.show_parish_map %}
+      {% if site.homepage.parishes.parish_map_type == "interactive" %}
+        <div id="map" class="homepage-map"></div>
+      {% elsif site.homepage.parishes.parish_map_type == "static" %}
+      <div class="homepage-map">
+        <picture>
+          <source srcset="{{ site.homepage.parishes.static_map_url.avif }}" type="image/avif">
+          <img src="{{ site.homepage.parishes.static_map_url.jpg }}" alt="Map of parish locations" class="static-map-image">
+        </picture>
+      </div>
+      {% endif %}
+    {% endif %}
+
+    {% if site.homepage.parishes.show_parish_list %}
+    <div class="homepage-parish-locations">
+      {% for parish in site.data.all_council_info_data.council_parishes %}
+        <div class="homepage-parish-location">
+          <div class="homepage-parish-location-inner">
+            <h3>{{ parish.parish_name }}</h3>
+            <p>{{ parish.parish_address | replace: ", USA", "" }}</p>
+            <div class="homepage-parish-location-inner-links">
+              <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">Get Directions</a>
+              {% if site.homepage.parishes.parish_map_type == "interactive" %}
+              <a class="center-on-map-link" data-lat="{{ parish.gps_coordinates[0] }}" data-lng="{{ parish.gps_coordinates[1] }}">Center on Map</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+{% endif %}
