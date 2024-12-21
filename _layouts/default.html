@@ -78,7 +78,7 @@
         console.log(url, homepageUrl);
         if (url.includes("/events/")) {
           setTimeout(initEventMap, 50);
-        } else if (parishMapType === "interactive" && (url.replace("/", "").replace("www.", "") === homepageUrl.replace("/", "").replace("www.", "")|| url.replace("/", "") === "127.0.0.1:4000")) {
+        } else if (parishMapType === "interactive" && (url.replace("/", "").split(".").slice(-2).join(".") === homepageUrl.replace("/", "").split(".").slice(-2).join(".") || url.replace("/", "") === "127.0.0.1:4000")) {
           setTimeout(initHomepageParishMap, 50);
         }
       }
