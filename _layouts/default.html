@@ -69,16 +69,13 @@
           {% endfor %}
         ]
       };
-      var siteUrl = "{{ site.url }}";
-      var parishMapType = "{{ site.homepage.parishes.parish_map_type }}";
+      const parishMapType = "{{ site.homepage.parishes.parish_map_type }}";
 
       function onNavigateOrLoad() {
-        const url = window.location.href.replace("http://", "").replace("https://", "");
-        const homepageUrl = siteUrl.replace("http://", "").replace("https://", "");
-        console.log(url, homepageUrl);
-        if (url.includes("/events/")) {
+        var relativeUrl = window.location.pathname;
+        if (relativeUrl.includes("/events/")) {
           setTimeout(initEventMap, 50);
-        } else if (parishMapType === "interactive" && (url.replace("/", "").split(".").slice(-2).join(".") === homepageUrl.replace("/", "").split(".").slice(-2).join(".") || url.replace("/", "") === "127.0.0.1:4000")) {
+        } else if (parishMapType === "interactive" && (relativeUrl === "/")) {
           setTimeout(initHomepageParishMap, 50);
         }
       }
