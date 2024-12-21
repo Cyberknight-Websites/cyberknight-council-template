@@ -65,3 +65,8 @@ homepage:
     static_map_url: 
       avif: 'https://2431ocpstorage.blob.core.windows.net/production-anonymous-container/2431/map_images/Alhambra_google_maps_static_map.avif'
       jpg:  'https://2431ocpstorage.blob.core.windows.net/production-anonymous-container/2431/map_images/Alhambra_google_maps_static_map.jpg'
+
+snow_effect:
+  enabled: True
+  start_date: 'December 1'
+  end_date: 'January 31'

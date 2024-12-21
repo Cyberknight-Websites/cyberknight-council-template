@@ -95,6 +95,14 @@
       <div id="background-color-layer"></div>
       <div id="pan-logos-layer"></div>
       <div id="pan-logo-gradient-overlay"></div>
+      {% if site.snow_effect.enabled %}
+        {% assign current_m_d = 'now' | date: '%m%d' | plus: 0 %}
+        {% assign start_m_d = site.snow_effect.start_date | date: '%m%d' | plus: 0 %}
+        {% assign end_m_d = site.snow_effect.end_date | date: '%m%d' | plus: 0 %}
+        {% if current_m_d >= start_m_d or current_m_d <= end_m_d %}
+          <script src="https://ddosnotification.github.io/snow-theme/snow.js"></script>
+        {% endif %}
+      {% endif %}
     </div>
     {% include image_dialog.html %}
     <div class="topbar-container">
