@@ -44,7 +44,7 @@
     <link rel="manifest" href="{{ site.url }}/assets/favicon/site.webmanifest">
     
     <!-- theme-color -->
-    <!-- <meta name="theme-color" content="#112764"> -->
+    <meta name="theme-color" content="#112764">
   
     <!-- Google site verification -->
     <meta name="google-site-verification" content="VsNyvMxYvOQFM1OyN-DUCMvUDGYbj3xb6ZmPBbkNLYo" />
@@ -86,6 +86,7 @@
       // }
     </script>
     <script src="{{ '/assets/js/leaflet.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/toggle_theme.js' | relative_url }}"></script>
   </head>
   <body>
     <div id="background-divs">
@@ -105,9 +106,6 @@
     <div class="topbar-container">
       <div class="topbar topbar-expand">
         <div class="topbar-top-row">
-          <button id="topbar-lightbulb" class="topbar-button topbar-button-left" aria-label="Toggle light/dark mode">
-            <img alt="Lightbulb icon">
-          </button>
           <div id="top-bar-kofc-logo">
             <div id="top-bar-center">
               {% if site.topbar.show_kofc_logo %}
@@ -157,6 +155,19 @@
           <div class="not-dashed" style="margin: 2rem auto 1rem;"></div>
           <div class="credits">
             <ul class="credit-links">
+              <li>
+                <p style="display: inline;">
+                  Theme
+                  &nbsp;|&nbsp;
+                  <div class="theme-selector" id="theme-selector-div">
+                    <select id="theme-dropdown" aria-label="Theme selection">
+                      <option value="system">System</option>
+                      <option value="light">Light</option>
+                      <option value="dark">Dark</option>
+                    </select>
+                    <span class="noselect" id="theme-selector-span">▼</span>
+                  </div>
+                </p>
               <li>
                 Last updated on {{ site.time | date: "%B %d, %Y" }}
               </li>
@@ -236,5 +247,4 @@
       document.addEventListener('click', handleLinkClick);
     </script>
   </body>
-  {% include toggle_theme_js.html %}
 </html>
