@@ -86,6 +86,7 @@
       // }
     </script>
     <script src="{{ '/assets/js/leaflet.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/toggle_theme.js' | relative_url }}"></script>
   </head>
   <body>
     <div id="background-divs">
@@ -105,9 +106,6 @@
     <div class="topbar-container">
       <div class="topbar topbar-expand">
         <div class="topbar-top-row">
-          <button id="topbar-lightbulb" class="topbar-button topbar-button-left" aria-label="Toggle light/dark mode">
-            <img alt="Lightbulb icon">
-          </button>
           <div id="top-bar-kofc-logo">
             <div id="top-bar-center">
               {% if site.topbar.show_kofc_logo %}
@@ -159,6 +157,12 @@
             <ul class="credit-links">
               <li>
                 Last updated on {{ site.time | date: "%B %d, %Y" }}
+                &nbsp;|&nbsp;
+                <select id="theme-dropdown" aria-label="Theme selection">
+                  <option value="system">System Default</option>
+                  <option value="light">Light</option>
+                  <option value="dark">Dark</option>
+                </select>
               </li>
               <li>
                 Contact us at&nbsp;<a href="mailto:{{site.council_email}}">{{site.council_email}}</a>
@@ -236,5 +240,4 @@
       document.addEventListener('click', handleLinkClick);
     </script>
   </body>
-  {% include toggle_theme_js.html %}
 </html>
