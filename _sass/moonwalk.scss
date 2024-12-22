@@ -723,3 +723,41 @@ div.posts-list-container {
     }
   }
 }
+
+.theme-selector{
+  cursor: pointer;
+  display: inline-block;
+  select {
+    padding: 0.4rem 0rem 0.4rem 0.4rem;
+    border-radius: 0.4rem;
+    border: none;
+    background-color: #00000000;
+    font-size: 1.1rem;
+    appearance: none;
+    font-family: Roboto Slab;
+    cursor: pointer;
+    outline: none;
+    color: var(--link-text);
+    transition: 0.2s ease-in;
+  }
+  select:hover {
+    color: var(--link-underline);
+  }
+  span {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#snow-container {
+  z-index: 50 !important;
+}

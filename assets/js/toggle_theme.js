@@ -1,24 +1,30 @@
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
     // Only switch if user hasn't explicitly chosen light/dark
-    if (localStorage.getItem('theme') === 'system') {
-        const newColorScheme = event.matches ? "dark" : "light";
-        switchToColorTheme(newColorScheme);
+    if (localStorageTheme) {
+        if (localStorage.getItem('theme') === 'system') {
+            switchToColorTheme('system');
+        }
     }
 });
+
 isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
 localStorageTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 
 if (localStorageTheme) {
     if (localStorageTheme === 'dark')
         switchToColorTheme('dark', true);
-    else
+    else if (localStorageTheme === 'light')
         switchToColorTheme('light', true);
+    else if (localStorageTheme === 'system') {
+        switchToColorTheme('system', true);
+    }
 }
 else {
-    if (isDarkMode)
-        switchToColorTheme('dark', true);
-    else
-        switchToColorTheme('light', true);
+    // if (isDarkMode)
+    //     switchToColorTheme('dark', true);
+    // else
+    //     switchToColorTheme('light', true);
+    switchToColorTheme('system', true);
 }
 
 function switchToColorTheme(themeChangeto, pageload = false) {
@@ -30,9 +36,18 @@ function switchToColorTheme(themeChangeto, pageload = false) {
         document.documentElement.setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
     }
-    else {
+    else if (themeChangeto === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
+    }
+    else if (themeChangeto === 'system') {
+        var isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (isDarkMode)
+            document.documentElement.setAttribute('data-theme', 'dark');
+        else
+            document.documentElement.setAttribute('data-theme', 'light');
+        // document.documentElement.setAttribute('data-theme', 'system');
+        localStorage.setItem('theme', 'system');
     }
 }
 
@@ -49,13 +64,6 @@ document.addEventListener('DOMContentLoaded', function() {
         : localStorageTheme === 'light' ? 'light' : 'system';
 
     themeDropdown.addEventListener('change', function() {
-        if (this.value === 'system') {
-            localStorage.removeItem('theme');
-            // Rely on system color scheme
-            let systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light';
-            switchToColorTheme(systemTheme);
-        } else {
-            switchToColorTheme(this.value);
-        }
+        switchToColorTheme(this.value);
     });
 });

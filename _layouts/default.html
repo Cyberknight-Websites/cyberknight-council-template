@@ -44,7 +44,7 @@
     <link rel="manifest" href="{{ site.url }}/assets/favicon/site.webmanifest">
     
     <!-- theme-color -->
-    <!-- <meta name="theme-color" content="#112764"> -->
+    <meta name="theme-color" content="#112764">
   
     <!-- Google site verification -->
     <meta name="google-site-verification" content="VsNyvMxYvOQFM1OyN-DUCMvUDGYbj3xb6ZmPBbkNLYo" />
@@ -156,13 +156,20 @@
           <div class="credits">
             <ul class="credit-links">
               <li>
+                <p style="display: inline;">
+                  Theme
+                  &nbsp;|&nbsp;
+                  <div class="theme-selector" id="theme-selector-div">
+                    <select id="theme-dropdown" aria-label="Theme selection">
+                      <option value="system">System</option>
+                      <option value="light">Light</option>
+                      <option value="dark">Dark</option>
+                    </select>
+                    <span class="noselect" id="theme-selector-span">▼</span>
+                  </div>
+                </p>
+              <li>
                 Last updated on {{ site.time | date: "%B %d, %Y" }}
-                &nbsp;|&nbsp;
-                <select id="theme-dropdown" aria-label="Theme selection">
-                  <option value="system">System Default</option>
-                  <option value="light">Light</option>
-                  <option value="dark">Dark</option>
-                </select>
               </li>
               <li>
                 Contact us at&nbsp;<a href="mailto:{{site.council_email}}">{{site.council_email}}</a>
