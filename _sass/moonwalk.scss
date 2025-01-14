@@ -728,7 +728,7 @@ div.posts-list-container {
   cursor: pointer;
   display: inline-block;
   select {
-    padding: 0.4rem 0rem 0.4rem 0.4rem;
+    padding: 0.4rem 0rem 0.4rem 0rem;
     border-radius: 0.4rem;
     border: none;
     background-color: #00000000;
@@ -759,5 +759,5 @@ div.posts-list-container {
 }
 
 #snow-container {
-  z-index: 50 !important;
+  z-index: -1 !important;
 }
