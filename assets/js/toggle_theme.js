@@ -46,7 +46,6 @@ function switchToColorTheme(themeChangeto, pageload = false) {
             document.documentElement.setAttribute('data-theme', 'dark');
         else
             document.documentElement.setAttribute('data-theme', 'light');
-        // document.documentElement.setAttribute('data-theme', 'system');
         localStorage.setItem('theme', 'system');
     }
 }

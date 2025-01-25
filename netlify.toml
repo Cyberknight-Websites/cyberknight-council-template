@@ -1,3 +1,3 @@
 [build]
-  command = "bundle exec ruby _scripts/sync_data.rb --council 2431 --url https://secure.kofc2431.org && bundle exec jekyll build"
+  command = "bundle exec ruby _scripts/sync_data.rb --council 2431 --url https://secure.cyberknight-websites.com && bundle exec jekyll build"
   publish = "_site"
