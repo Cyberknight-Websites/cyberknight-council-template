@@ -12,3 +12,4 @@ _events/
 assets/opengraph/
 _posts/*
 assets/images/member-photos/*
+Gemfile.lock
