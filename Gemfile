@@ -11,6 +11,8 @@ end
   gem 'jekyll-archives'
 gem "open-uri", "~> 0.4.1"
 
+gem 'google-protobuf', force_ruby_platform: true if RUBY_PLATFORM.include?('linux-musl')
+
 gem "optparse", "~> 0.5.0"
 
 gem "rmagick", "~> 6.0"
