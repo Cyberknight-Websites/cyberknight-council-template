@@ -9,7 +9,7 @@ vendor/
 .DS_Store
 _data/all_council_info_data.json
 _events/
-assets/opengraph/
 _posts/*
 assets/images/member-photos/*
 Gemfile.lock
+assets/opengraph/opengraph-website-title.png
