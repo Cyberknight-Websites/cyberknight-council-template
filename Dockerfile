@@ -15,10 +15,10 @@ RUN set -eux; \
     ;
 
 # Install ImageMagick dependencies
-RUN set -eux; apk add imagemagick libjpeg libwebp-tools
+RUN set -eux; apk add imagemagick-dev
 
-# Install Bundler
-RUN set -eux; gem install bundler
+# Install Bundler and Jekyll
+RUN set -eux; gem install bundler jekyll
 
 # Install extra packages if needed
 RUN set -eux; \
@@ -41,8 +41,5 @@ RUN set -eux; \
         /root/.bundle/cache \
     ;
 
-# Make sure the sync_data script is executable (if it's not already)
-RUN chmod +x /srv/jekyll/_scripts/sync_data.rb
-
-ENTRYPOINT ["bundler", "exec", "jekyll"]
-CMD ["--version"]
+# ENTRYPOINT ["bundler", "exec", "jekyll"]
+# CMD ["--version"]
