@@ -33,7 +33,8 @@ fi
 cd $JEKYLL_DIR
 git reset --hard HEAD
 git pull
-rm -rf $NGINX_DIR/*
+rm -rf $NGINX_DIR/council-$COUNCIL_NUMBER
+mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec ruby /srv/jekyll/_scripts/sync_data.rb --council $COUNCIL_NUMBER --url https://secure.cyberknight-websites.com
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec jekyll build
-cp -r $JEKYLL_DIR/_site/* $NGINX_DIR
+cp -r $JEKYLL_DIR/_site/* $NGINX_DIR/council-$COUNCIL_NUMBER
