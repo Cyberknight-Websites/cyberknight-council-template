@@ -59,9 +59,8 @@ homepage:
   events:
     show_section: True
   announcements:
-    show_section: True
-    show_latest_text: True
-    show_recent: True
+    show_latest: True
+    show_recent_list: False
     number_of_recent_to_show: 3
   parishes:
     show_section: True

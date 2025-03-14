@@ -15,6 +15,33 @@ layout: default
   {% include calendar_list.html type_to_show="upcoming" limit=3 %}
 {% endif %}
 
+{% if site.homepage.announcements.show_latest %}
+  <h2>Latest Announcement</h2>
+  {% assign latest_announcement = site.announcements | sort: 'sent_at' | reverse | first %}
+  {% if latest_announcement %}
+  <div class="latest-announcement">
+    <div class="announcement-content">
+      <p class="announcement-date"><strong>Sent: </strong>{{ latest_announcement.sent_at | date: site.events_date_format }}</p>
+      <br/>
+      {% if latest_announcement.sms_body %}
+      <p>{{ latest_announcement.sms_body }}</p>  
+      {% else %}
+        {{ latest_announcement.email_body }}
+      {% endif %}
+      <br/>
+      <div class="announcement-links">
+        <a href="{{ latest_announcement.url | relative_url }}" class="view-full-announcement">View Full Announcement</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endif %}
+
+{% if site.homepage.announcements.show_recent_list %}
+<h2>Recent Announcements</h2>
+  {% include announcements_list.html limit=site.homepage.announcements.number_of_recent_to_show %}
+{% endif %}
+
 <h2>Latest Posts</h2>
 {% include post_list.html type_to_show="upcoming" limit=2 %}
 

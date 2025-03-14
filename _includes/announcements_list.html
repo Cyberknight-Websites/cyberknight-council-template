@@ -1,14 +1,14 @@
 {% assign sorted_announcements = site.announcements | sort: 'sent_at' | reverse %}
 {% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
 
-<div class="posts-list-container">
+<div class="announcements-list-container">
 {% for announcement in sorted_announcements limit:include.limit %}
-    <div class="posts-list-item">
-        <div class="post-list-item-date">
+    <div class="announcements-list-item">
+        <div class="announcement-list-item-date">
             <p>{{ announcement.sent_at | date: site.events_date_format }}</p>
         </div>
-        <div class="post-list-item-inner">
-            <div class="post-list-item-inner-info">
+        <div class="announcement-list-item-inner">
+            <div class="announcement-list-item-inner-info">
                 <h3>{% if announcement.email_subject %}{{ announcement.email_subject }}{% else %}Council #{{ site.council_number }} Announcement{% endif %}</h3>
                 <div style="display: flex; flex-wrap: wrap;">
                     <p><strong>Sent:</strong> {{ announcement.sent_at | date: site.events_date_format }}</p>
@@ -16,7 +16,7 @@
                 <!-- print content of announcement -->
                 <p>{{ announcement.sms_body | strip_html | truncatewords: 24 }}</p>
             </div>
-            <div class="post-list-item-inner-links">
+            <div class="announcement-list-item-inner-links">
                 <a href="{{ announcement.url | relative_url }}">Read More</a>
             </div>
         </div>

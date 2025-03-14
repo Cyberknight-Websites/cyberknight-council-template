@@ -103,9 +103,7 @@ begin
   Dir.glob('_announcements/*.md').each { |file| File.delete(file) }
   if all_council_info_data.key?('council_announcements') && !all_council_info_data['council_announcements'].empty?
     all_council_info_data['council_announcements'].each do |announcement|
-      # Create formatted date for filename
-      announcement_date = tz.to_local(Time.at(announcement['sent_at']))
-      filename = "_announcements/#{announcement_date.strftime('%Y-%m-%d')}-#{announcement['announcement_id']}.md"
+      filename = "_announcements/#{announcement['announcement_id']}.md"
       
       # Create announcement markdown file
       File.open(filename, 'w') do |file|
