@@ -32,6 +32,9 @@ collections:
   events:
     output: true
     permalink: /events/:path/
+  announcements:
+    output: true
+    permalink: /announcements/:path/
 
 council_name: 'Alhambra'
 council_email: 'kofc2431@yahoo.com'
@@ -55,6 +58,11 @@ council_logo_url: '/assets/svg/council-light.svg'
 homepage:
   events:
     show_section: True
+  announcements:
+    show_section: True
+    show_latest_text: True
+    show_recent: True
+    number_of_recent_to_show: 3
   parishes:
     show_section: True
     show_sentence: False
