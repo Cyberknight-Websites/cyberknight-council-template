@@ -13,3 +13,4 @@ _posts/*
 assets/images/member-photos/*
 Gemfile.lock
 assets/opengraph/opengraph-website-title.png
+_announcements/*

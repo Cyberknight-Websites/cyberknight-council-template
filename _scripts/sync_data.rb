@@ -97,6 +97,42 @@ begin
 
   puts "Generated #{all_council_info_data['council_posts'].length} post files in _posts directory"
 
+  # Process announcements
+  Dir.mkdir('_announcements') unless Dir.exist?('_announcements')
+  # Delete existing announcement files
+  Dir.glob('_announcements/*.md').each { |file| File.delete(file) }
+  if all_council_info_data.key?('council_announcements') && !all_council_info_data['council_announcements'].empty?
+    all_council_info_data['council_announcements'].each do |announcement|
+      filename = "_announcements/#{announcement['announcement_id']}.md"
+      
+      # Create announcement markdown file
+      File.open(filename, 'w') do |file|
+        file.puts "---"
+        file.puts "layout: announcement"
+        
+        file.puts "announcement_id: #{announcement['announcement_id']}"
+        file.puts "announcement_types: #{announcement['announcement_types'].to_json}"
+        file.puts "sent_at: #{announcement['sent_at']}"
+        
+        # Include email content if it exists
+        if announcement['announcement_types'].include?('email')
+          file.puts "email_subject: #{escape_html_for_yaml(announcement['email_subject'])}"
+          file.puts "email_body: #{escape_html_for_yaml(announcement['email_body'])}"
+        end
+        
+        # Include SMS content if it exists
+        if announcement['announcement_types'].include?('sms')
+          file.puts "sms_body: #{escape_html_for_yaml(announcement['sms_body'])}"
+        end
+        
+        file.puts "---"
+      end
+    end
+    puts "Generated #{all_council_info_data['council_announcements'].length} announcement files in _announcements directory"
+  else
+    puts "No announcements found in API response"
+  end
+
   Dir.mkdir('assets/opengraph') unless Dir.exist?('assets/opengraph')
 
   homepage_opengraph = Magick::Image.read('assets/opengraph/opengraph-website-title-template.png').first
