@@ -1,0 +1,21 @@
+---
+layout: default
+---
+
+<h1 class="--title">{% if page.email_subject %}{{ page.email_subject }}{% else %}Council #{{ site.council_number }} Announcement{% endif %}</h1>
+
+<p class="announcement-date"><strong>Sent:</strong> {{ page.sent_at | date: site.events_date_format }}</p>
+
+<div class="announcement-content">
+  <!-- <h2>Message</h2> -->
+  {% if page.email_body %}
+    <div class="email-content">
+      {{ page.email_body }}
+    </div>
+  
+  {% else %}
+    <div class="sms-content">
+      {{ page.sms_body }}
+    </div>
+  {% endif %}
+</div>
