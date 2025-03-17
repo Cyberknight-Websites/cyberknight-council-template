@@ -15,14 +15,22 @@ div.announcement-content {
   p {
     margin: 0;
   }
+
+  h2 {
+    // margin-bottom: 1rem;
+    margin: 1rem 0 1rem;
+    font-size: 1.6rem;
+    color: var(--text-secondary);
+  }
   
   .announcement-attachments {
     margin-top: 2rem;
     
     h3 {
-      margin-bottom: 1rem;
+      margin: 1.5rem 0 0.5rem;
       font-size: 1.4rem;
       color: var(--text-secondary);
+      width: 100%;
     }
     
     .attachment-gallery {
@@ -44,6 +52,49 @@ div.announcement-content {
           &:hover {
             transform: scale(1.02);
             cursor: pointer;
+          }
+        }
+      }
+    }
+    
+    .other-attachments {
+      margin-top: 1.5rem;
+      
+      .file-attachments-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        
+        .file-attachment-item {
+          background-color: var(--card-color);
+          border: 1px solid var(--topbar-link-background-border);
+          border-radius: 0.5rem;
+          padding: 0;
+          transition: all 0.2s ease;
+          
+          &:hover {
+            background-color: var(--topbar-link-background-border);
+            transform: translateY(-2px);
+          }
+          
+          .file-download-link {
+            display: block;
+            padding: 0.8rem 1.2rem;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            
+            &:hover {
+              color: var(--topbar-text);
+            }
+            
+            &:before {
+              content: "📄 ";
+              margin-right: 0.5rem;
+            }
           }
         }
       }
