@@ -40,7 +40,7 @@
   window.addEventListener('scroll', () => {
     hidetopbar();
     // Check if user scrolls to top
-    if ((window.pageYOffset === 0) && (isDesktop.matches)) {
+    if ((window.pageYOffset <= 20) && (isDesktop.matches)) {
        expandtopbar();
     }
   });

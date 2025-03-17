@@ -109,15 +109,21 @@ begin
       File.open(filename, 'w') do |file|
         file.puts "---"
         file.puts "layout: announcement"
-        
         file.puts "announcement_id: #{announcement['announcement_id']}"
         file.puts "announcement_types: #{announcement['announcement_types'].to_json}"
         file.puts "sent_at: #{announcement['sent_at']}"
         
         # Include email content if it exists
         if announcement['announcement_types'].include?('email')
+          file.puts "title: #{escape_html_for_yaml(announcement['email_subject'])}"
           file.puts "email_subject: #{escape_html_for_yaml(announcement['email_subject'])}"
           file.puts "email_body: #{escape_html_for_yaml(announcement['email_body'])}"
+          # check that email_attachment_urls exists
+          if announcement['email_attachment_urls']
+            file.puts "email_attachment_urls: #{announcement['email_attachment_urls'].to_json}"
+          end
+        else
+          file.puts "title: Council Announcement"
         end
         
         # Include SMS content if it exists

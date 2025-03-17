@@ -3,10 +3,12 @@
     
     function dialogButtonInitializer() {
         const all_pictures = document.querySelectorAll('picture');
+        const all_lightbox_images = document.querySelectorAll('.announcement-img-lightbox');
         const dialog = document.querySelector('dialog')
         const dialogContent = document.getElementById('img-dialog-content');
         const body = document.querySelector('body');
     
+        // Handle regular picture elements
         all_pictures.forEach(openDialogButton => {
             openDialogButton.addEventListener('click', (event) => {
                 // Copy the contents of the clicked picture into the dialog content
@@ -16,21 +18,34 @@
 
                 dialog.showModal()
                 body.style.overflow = 'hidden';
-          })
-      })
+            });
+        });
+        
+        // Handle announcement attachment images
+        all_lightbox_images.forEach(img => {
+            img.addEventListener('click', (event) => {
+                event.preventDefault();
+                const fullImageUrl = img.getAttribute('data-full-image') || img.src;
+                const imgHtml = `<img src="${fullImageUrl}" alt="Announcement attachment">`;
+                dialogContent.innerHTML = imgHtml;
+                
+                dialog.showModal();
+                body.style.overflow = 'hidden';
+            });
+        });
     
-      dialog.addEventListener('click', (event) => {
-          const dialogDimentions = dialog.getBoundingClientRect()
-          if (
-              event.clientX < dialogDimentions.left ||
-              event.clientX > dialogDimentions.right ||
-              event.clientY < dialogDimentions.top ||
-              event.clientY > dialogDimentions.bottom
-          ) {
-              dialog.close()
-              body.style.overflow = '';
-          }
-      })
+        dialog.addEventListener('click', (event) => {
+            const dialogDimensions = dialog.getBoundingClientRect()
+            if (
+                event.clientX < dialogDimensions.left ||
+                event.clientX > dialogDimensions.right ||
+                event.clientY < dialogDimensions.top ||
+                event.clientY > dialogDimensions.bottom
+            ) {
+                dialog.close()
+                body.style.overflow = '';
+            }
+        });
     }
     </script>
     

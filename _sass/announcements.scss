@@ -15,6 +15,40 @@ div.announcement-content {
   p {
     margin: 0;
   }
+  
+  .announcement-attachments {
+    margin-top: 2rem;
+    
+    h3 {
+      margin-bottom: 1rem;
+      font-size: 1.4rem;
+      color: var(--text-secondary);
+    }
+    
+    .attachment-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      
+      .attachment-item {
+        max-width: 100%;
+        
+        .attachment-image {
+          max-width: 100%;
+          height: auto;
+          border-radius: 0.5rem;
+          box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s ease;
+          
+          &:hover {
+            transform: scale(1.02);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
 }
 
 // Latest announcement on homepage

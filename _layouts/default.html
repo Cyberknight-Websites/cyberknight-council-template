@@ -78,6 +78,11 @@
         } else if (parishMapType === "interactive" && (relativeUrl === "/")) {
           setTimeout(initHomepageParishMap, 50);
         }
+        
+        // Initialize image lightbox for announcement attachments
+        if (relativeUrl.includes("/announcements/")) {
+          setTimeout(dialogButtonInitializer, 50);
+        }
       }
 
       document.addEventListener("DOMContentLoaded", onNavigateOrLoad);
