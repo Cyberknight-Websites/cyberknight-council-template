@@ -18,4 +18,17 @@ layout: default
       {{ page.sms_body }}
     </div>
   {% endif %}
+  
+  {% if page.email_attachment_urls %}
+    <div class="announcement-attachments">
+      <h3>Attachments</h3>
+      <div class="attachment-gallery">
+        {% for attachment_url in page.email_attachment_urls %}
+          <div class="attachment-item">
+            <img src="{{ attachment_url }}" alt="Announcement attachment" class="attachment-image announcement-img-lightbox" data-full-image="{{ attachment_url }}" />
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 </div>
