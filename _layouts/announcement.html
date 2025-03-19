@@ -26,23 +26,22 @@ layout: default
       {% assign image_attachments = "" | split: "" %}
       {% assign other_attachments = "" | split: "" %}
       
-      {% for attachment_url in page.email_attachment_urls %}
-        {% assign url_parts = attachment_url | split: "." %}
-        {% assign extension = url_parts | last | downcase %}
-        
-        {% if extension == "jpg" or extension == "jpeg" or extension == "png" or extension == "gif" or extension == "webp" %}
-          {% assign image_attachments = image_attachments | push: attachment_url %}
+      {% for attachment in page.email_attachment_urls %}
+        {% if attachment.type == "image" %}
+          {% assign image_attachments = image_attachments | push: attachment %}
         {% else %}
-          {% assign other_attachments = other_attachments | push: attachment_url %}
+          {% assign other_attachments = other_attachments | push: attachment.original %}
         {% endif %}
       {% endfor %}
       
       {% if image_attachments.size > 0 %}
         <div class="attachment-gallery">
           <h3>Images</h3>
-          {% for image_url in image_attachments %}
+          {% for image in image_attachments %}
+            {% assign display_url = image.converted | default: image.original %}
+            {% assign full_url = image.original %}
             <div class="attachment-item">
-              <img src="{{ image_url }}" alt="Announcement attachment" class="attachment-image announcement-img-lightbox" data-full-image="{{ image_url }}" />
+              <img src="{{ display_url }}" alt="Announcement attachment" class="attachment-image announcement-img-lightbox" data-full-image="{{ full_url }}" />
             </div>
           {% endfor %}
         </div>
