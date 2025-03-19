@@ -7,7 +7,7 @@ layout: default
 <p class="announcement-date"><strong>Sent:</strong> {{ page.sent_at | date: site.events_date_format }}</p>
 
 <div class="announcement-content">
-  <!-- <h2>Message</h2> -->
+  <h2>Message</h2>
   {% if page.email_body %}
     <div class="email-content">
       {{ page.email_body }}
@@ -21,14 +21,48 @@ layout: default
   
   {% if page.email_attachment_urls %}
     <div class="announcement-attachments">
-      <h3>Attachments</h3>
-      <div class="attachment-gallery">
-        {% for attachment_url in page.email_attachment_urls %}
-          <div class="attachment-item">
-            <img src="{{ attachment_url }}" alt="Announcement attachment" class="attachment-image announcement-img-lightbox" data-full-image="{{ attachment_url }}" />
-          </div>
-        {% endfor %}
-      </div>
+      <h2>Attachments</h2>
+      
+      {% assign image_attachments = "" | split: "" %}
+      {% assign other_attachments = "" | split: "" %}
+      
+      {% for attachment in page.email_attachment_urls %}
+        {% if attachment.type == "image" %}
+          {% assign image_attachments = image_attachments | push: attachment %}
+        {% else %}
+          {% assign other_attachments = other_attachments | push: attachment.original %}
+        {% endif %}
+      {% endfor %}
+      
+      {% if image_attachments.size > 0 %}
+        <div class="attachment-gallery">
+          <h3>Images</h3>
+          {% for image in image_attachments %}
+            {% assign display_url = image.converted | default: image.original %}
+            {% assign full_url = image.original %}
+            <div class="attachment-item">
+              <img src="{{ display_url }}" alt="Announcement attachment" class="attachment-image announcement-img-lightbox" data-full-image="{{ full_url }}" />
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      {% if other_attachments.size > 0 %}
+        <div class="other-attachments">
+          <h3>Files</h3>
+          <ul class="file-attachments-list">
+            {% for file_url in other_attachments %}
+              {% assign file_name_parts = file_url | split: "/" %}
+              {% assign file_name = file_name_parts | last %}
+              <li class="file-attachment-item">
+                <a href="{{ file_url }}" class="file-download-link" target="_blank" download>
+                  {{ file_name }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
   {% endif %}
 </div>

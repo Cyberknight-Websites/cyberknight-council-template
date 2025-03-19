@@ -30,9 +30,13 @@ if [ -z "$COUNCIL_NUMBER" ]; then
   exit 1
 fi
 
+# Remove JEKYLL_DIR if it exists and create a new one
+if [ -d "$JEKYLL_DIR" ]; then
+  rm -rf $JEKYLL_DIR
+fi
+mkdir -p $JEKYLL_DIR
+git clone https://github.com/Cyberknight-Websites/cyberknight-council-template.git $JEKYLL_DIR
 cd $JEKYLL_DIR
-git reset --hard HEAD
-git pull
 rm -rf $NGINX_DIR/council-$COUNCIL_NUMBER
 mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec ruby /srv/jekyll/_scripts/sync_data.rb --council $COUNCIL_NUMBER --url https://secure.cyberknight-websites.com

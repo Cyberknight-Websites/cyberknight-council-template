@@ -118,8 +118,8 @@ begin
           file.puts "title: #{escape_html_for_yaml(announcement['email_subject'])}"
           file.puts "email_subject: #{escape_html_for_yaml(announcement['email_subject'])}"
           file.puts "email_body: #{escape_html_for_yaml(announcement['email_body'])}"
-          # check that email_attachment_urls exists
-          if announcement['email_attachment_urls']
+          # check that email_attachment_urls exists and handle the new structure
+          if announcement['email_attachment_urls'] && !announcement['email_attachment_urls'].empty?
             file.puts "email_attachment_urls: #{announcement['email_attachment_urls'].to_json}"
           end
         else
