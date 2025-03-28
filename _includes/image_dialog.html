@@ -8,28 +8,34 @@
         const dialogContent = document.getElementById('img-dialog-content');
         const body = document.querySelector('body');
     
-        // Handle regular picture elements
+        // Handle announcement-img-lightbox class images (including those inside pictures)
+        all_lightbox_images.forEach(img => {
+            img.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopPropagation(); // Prevent picture click event from triggering
+                const fullImageUrl = img.getAttribute('data-full-image') || img.src;
+                const imgHtml = `<img src="${fullImageUrl}" alt="Full size image">`;
+                dialogContent.innerHTML = imgHtml;
+                
+                dialog.showModal();
+                body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Handle regular picture elements (only those that don't contain lightbox images)
         all_pictures.forEach(openDialogButton => {
             openDialogButton.addEventListener('click', (event) => {
+                // Skip if the click was on a lightbox image
+                if (event.target.classList.contains('announcement-img-lightbox')) {
+                    return;
+                }
+                
                 // Copy the contents of the clicked picture into the dialog content
                 let htmlContent = event.target.outerHTML;
                 htmlContent = htmlContent.replace(/\?tr=w-480/g, '').replace(/max-height: 60vh/g, '').replace(/border-radius: 1rem;/g, '');
                 dialogContent.innerHTML = htmlContent;
 
                 dialog.showModal()
-                body.style.overflow = 'hidden';
-            });
-        });
-        
-        // Handle announcement attachment images
-        all_lightbox_images.forEach(img => {
-            img.addEventListener('click', (event) => {
-                event.preventDefault();
-                const fullImageUrl = img.getAttribute('data-full-image') || img.src;
-                const imgHtml = `<img src="${fullImageUrl}" alt="Announcement attachment">`;
-                dialogContent.innerHTML = imgHtml;
-                
-                dialog.showModal();
                 body.style.overflow = 'hidden';
             });
         });

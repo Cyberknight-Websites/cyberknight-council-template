@@ -8,11 +8,16 @@ layout: default
   {% for officer in site.data.all_council_info_data.council_officers %}
   <div class="eboard-member">
     <picture>
-      {% assign img_src = officer.member_photo_url %}
-      {% if img_src == null || img_src == "" %}
-        <img src="/assets/svg/koc_crest.svg" alt="The Knights of Columbus logo"/>
+      {% assign thumbnail_src = officer.member_photo_thumbnail %}
+      {% assign original_src = officer.member_photo_original %}
+      {% assign legacy_src = officer.member_photo_url %}
+      
+      {% if thumbnail_src and original_src %}
+        <img class="portrait announcement-img-lightbox" src="{{ thumbnail_src }}" alt="A headshot of {{ officer.officer_position }} {{ officer.officer_name }}" data-full-image="{{ original_src }}"/>
+      {% elsif legacy_src %}
+        <img class="portrait" src="{{ legacy_src }}" alt="A headshot of {{ officer.officer_position }} {{ officer.officer_name }}"/>
       {% else %}
-      <img class="portrait" src="{{ img_src }}" alt="A headshot of {{ officer.officer_position }} {{ officer.officer_name }}"/>
+        <img src="/assets/svg/koc_crest.svg" alt="The Knights of Columbus logo"/>
       {% endif %}
     </picture>
     <h3>{{ officer.officer_position }}</h3>
