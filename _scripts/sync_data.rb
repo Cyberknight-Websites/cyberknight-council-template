@@ -161,6 +161,13 @@ begin
   puts "Generated site opengraph image with title: #{text_to_draw}"
 
   homepage_opengraph.write('assets/opengraph/opengraph-website-title.png')
+  # Generate robots.txt
+  File.open('robots.txt', 'w') do |file|
+    file.puts "User-agent: *"
+    file.puts "Allow: /"
+    file.puts "Sitemap: #{all_council_info_data['council_website_settings']['website_url']}/sitemap.xml"
+  end
+  puts "Generated robots.txt"
 
 rescue StandardError => e
   puts "An error occurred: #{e.message}"
