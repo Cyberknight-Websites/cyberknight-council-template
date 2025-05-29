@@ -39,7 +39,6 @@ collections:
 council_name: 'Alhambra'
 council_email: 'kofc2431@yahoo.com'
 council_number: 2431
-url: https://www.kofc2431.org
 events_date_format: '%B %d, %Y'
 events_time_format: '%-I:%M %p'
 posts_date_format: '%B %d, %Y'
@@ -77,3 +76,5 @@ snow_effect:
   enabled: True
   start_date: 'December 1'
   end_date: 'January 1'
+
+url: https://www.kofc2431.org

@@ -169,6 +169,21 @@ begin
   end
   puts "Generated robots.txt"
 
+
+  puts "\nEditing _config.yml..."
+  config_path = '_config.yml'
+  if File.exist?(config_path)
+    config_content = File.read(config_path)
+
+    new_url = all_council_info_data['council_website_settings']['website_url']
+    updated_content = config_content.gsub(/^url:.*$/, "url: #{new_url}")
+
+    File.write(config_path, updated_content)
+    puts "Updated #{config_path} with URL: #{new_url}"
+  else
+    puts "Warning: #{config_path} not found, skipping config update."
+  end
+
 rescue StandardError => e
   puts "An error occurred: #{e.message}"
 end
