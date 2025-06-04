@@ -36,8 +36,7 @@ collections:
     output: true
     permalink: /announcements/:path/
 
-council_name: 'Alhambra'
-council_email: 'kofc2431@yahoo.com'
+council_name: 'hfasdjhAlhambra'
 council_number: 2431
 events_date_format: '%B %d, %Y'
 events_time_format: '%-I:%M %p'
@@ -45,7 +44,7 @@ posts_date_format: '%B %d, %Y'
 timezone: US/Pacific
 council_calendar_feed: 'https://secure.cyberknight-websites.com/council/2431/events/feed'
 topbar:
-  show_kofc_logo: True
+  show_kofc_logo: False
   show_council_name: True
   show_council_number: False
   show_knights_of_columbus_text: True
