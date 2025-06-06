@@ -36,8 +36,6 @@ collections:
     output: true
     permalink: /announcements/:path/
 
-council_name: 'hfasdjhAlhambra'
-council_number: 2431
 events_date_format: '%B %d, %Y'
 events_time_format: '%-I:%M %p'
 posts_date_format: '%B %d, %Y'
