@@ -25,8 +25,6 @@ jekyll-archives:
     tag: /tag/:name/
 
 title: 'Knights of Columbus: Alhambra Council #2431'
-description: 'The Alhambra Council 2431 has been proud to support the Catholic parishes and local community in Alhambra for 100 years. We are currently supporting the parishes of St. Therese, St. Thomas More, and All Souls.'
-council-tagline: 'Working as one in service to many'
 
 collections:
   events:

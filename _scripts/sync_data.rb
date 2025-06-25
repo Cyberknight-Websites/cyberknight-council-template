@@ -131,6 +131,11 @@ begin
           file.puts "sms_body: #{escape_html_for_yaml(announcement['sms_body'])}"
         end
         
+        # Include author if it exists
+        if announcement['author']
+          file.puts "author: #{escape_html_for_yaml(announcement['author'])}"
+        end
+        
         file.puts "---"
       end
     end

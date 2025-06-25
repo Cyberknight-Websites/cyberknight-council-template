@@ -12,6 +12,12 @@ layout: default
   <strong>Sent:</strong> {{ page.sent_at | date: site.events_date_format }}
 </p>
 
+{% if page.author %}
+<p class="announcement-author">
+  <strong>Author:</strong> {{ page.author }}
+</p>
+{% endif %}
+
 <div class="announcement-content">
   <h2>Message</h2>
   {% if page.email_body %}

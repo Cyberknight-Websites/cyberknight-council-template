@@ -13,9 +13,13 @@ layout: default
   {{ site.data.all_council_info_data.council_info.council_name }} Council
 </h1>
 <div style="margin: 0 auto">
-  <p class="homepage-tagline">"{{ site.council-tagline }}"</p>
+  <p class="homepage-tagline">
+    "{{
+    site.data.all_council_info_data.council_website_settings.homepage_tagline
+    }}"
+  </p>
   <p style="text-align: center; max-width: 34rem; margin: 0 auto">
-    {{ site.description }}
+    {{  site.data.all_council_info_data.council_website_settings.homepage_description }}
   </p>
 </div>
 

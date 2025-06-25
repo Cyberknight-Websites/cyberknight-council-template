@@ -21,9 +21,9 @@
     <meta property="og:description" content="{{ page.description }}">
     <meta name="twitter:description" content="{{ page.description }}">
     {% else %}
-    <meta name="description" content="{{ site.description }}">
-    <meta property="og:description" content="{{ site.description }}">
-    <meta name="twitter:description" content="{{ site.description }}">
+    <meta name="description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
+    <meta property="og:description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
+    <meta name="twitter:description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
     {% endif %}
     <link rel="canonical" href="{{site.url}}{{ page.url }}">
     <meta property="og:title" content="{{ page.title }}">
