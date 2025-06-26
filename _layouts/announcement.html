@@ -2,67 +2,75 @@
 layout: default
 ---
 
-<h1 class="--title">{% if page.email_subject %}{{ page.email_subject }}{% else %}Council #{{ site.council_number }} Announcement{% endif %}</h1>
+<h1 class="--title">
+  {% if page.email_subject %}{{ page.email_subject }}{% else %}Council #{{
+  site.data.all_council_info_data.council_info.council_number }} Announcement{%
+  endif %}
+</h1>
 
-<p class="announcement-date"><strong>Sent:</strong> {{ page.sent_at | date: site.events_date_format }}</p>
+<p class="announcement-date">
+  <strong>Sent:</strong> {{ page.sent_at | date: site.events_date_format }}
+</p>
+
+{% if page.author %}
+<p class="announcement-author">
+  <strong>Author:</strong> {{ page.author }}
+</p>
+{% endif %}
 
 <div class="announcement-content">
   <h2>Message</h2>
   {% if page.email_body %}
-    <div class="email-content">
-      {{ page.email_body }}
-    </div>
-  
+  <div class="email-content">{{ page.email_body }}</div>
+
   {% else %}
-    <div class="sms-content">
-      {{ page.sms_body }}
-    </div>
-  {% endif %}
-  
-  {% if page.email_attachment_urls %}
-    <div class="announcement-attachments">
-      <h2>Attachments</h2>
-      
-      {% assign image_attachments = "" | split: "" %}
-      {% assign other_attachments = "" | split: "" %}
-      
-      {% for attachment in page.email_attachment_urls %}
-        {% if attachment.type == "image" %}
-          {% assign image_attachments = image_attachments | push: attachment %}
-        {% else %}
-          {% assign other_attachments = other_attachments | push: attachment.original %}
-        {% endif %}
+  <div class="sms-content">{{ page.sms_body }}</div>
+  {% endif %} {% if page.email_attachment_urls %}
+  <div class="announcement-attachments">
+    <h2>Attachments</h2>
+
+    {% assign image_attachments = "" | split: "" %} {% assign other_attachments
+    = "" | split: "" %} {% for attachment in page.email_attachment_urls %} {% if
+    attachment.type == "image" %} {% assign image_attachments =
+    image_attachments | push: attachment %} {% else %} {% assign
+    other_attachments = other_attachments | push: attachment.original %} {%
+    endif %} {% endfor %} {% if image_attachments.size > 0 %}
+    <div class="attachment-gallery">
+      <h3>Images</h3>
+      {% for image in image_attachments %} {% assign display_url =
+      image.converted | default: image.original %} {% assign full_url =
+      image.original %}
+      <div class="attachment-item">
+        <img
+          src="{{ display_url }}"
+          alt="Announcement attachment"
+          class="attachment-image announcement-img-lightbox"
+          data-full-image="{{ full_url }}"
+        />
+      </div>
       {% endfor %}
-      
-      {% if image_attachments.size > 0 %}
-        <div class="attachment-gallery">
-          <h3>Images</h3>
-          {% for image in image_attachments %}
-            {% assign display_url = image.converted | default: image.original %}
-            {% assign full_url = image.original %}
-            <div class="attachment-item">
-              <img src="{{ display_url }}" alt="Announcement attachment" class="attachment-image announcement-img-lightbox" data-full-image="{{ full_url }}" />
-            </div>
-          {% endfor %}
-        </div>
-      {% endif %}
-      
-      {% if other_attachments.size > 0 %}
-        <div class="other-attachments">
-          <h3>Files</h3>
-          <ul class="file-attachments-list">
-            {% for file_url in other_attachments %}
-              {% assign file_name_parts = file_url | split: "/" %}
-              {% assign file_name = file_name_parts | last %}
-              <li class="file-attachment-item">
-                <a href="{{ file_url }}" class="file-download-link" target="_blank" download>
-                  {{ file_name }}
-                </a>
-              </li>
-            {% endfor %}
-          </ul>
-        </div>
-      {% endif %}
     </div>
+    {% endif %} {% if other_attachments.size > 0 %}
+    <div class="other-attachments">
+      <h3>Files</h3>
+      <ul class="file-attachments-list">
+        {% for file_url in other_attachments %} {% assign file_name_parts =
+        file_url | split: "/" %} {% assign file_name = file_name_parts | last %}
+        <li class="file-attachment-item">
+          <a
+            href="{{ file_url }}"
+            class="file-download-link"
+            target="_blank"
+            download
+          >
+            {{ file_name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  </div>
   {% endif %}
 </div>
+

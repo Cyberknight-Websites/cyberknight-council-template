@@ -11,7 +11,7 @@ title : Atom Feed
 <updated>{{ site.time | date: "%Y-%m-%dT%H:%M:%S%:z" }}</updated>
 <id>{{ site.url }}/feed.xml</id>
 	<title type="html">{{ site.title }}</title>
-	<subtitle type="text" xml:lang="en">{{ site.description }}</subtitle>
+	<subtitle type="text" xml:lang="en">{{  site.data.all_council_info_data.council_website_settings.homepage_description }}</subtitle>
 	{% for post in site.posts limit:100 %}
   	<entry>
 		<title type="html">{{ post.title | xml_escape }}</title>

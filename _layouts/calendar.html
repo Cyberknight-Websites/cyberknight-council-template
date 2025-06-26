@@ -14,14 +14,19 @@ layout: default
   </ul>  
 </ul> -->
 
-{% include calendar_list.html type_to_show="upcoming" limit=1000 %}
-  
-
-{% include calendar_list.html type_to_show="past" limit=1000 %}
-
+{% include calendar_list.html type_to_show="upcoming" limit=1000 %} {% include
+calendar_list.html type_to_show="past" limit=1000 %}
 
 <h2>Calendar Feed</h2>
 
-<p>Copy and paste the following link into your calendar application to subscribe to the council calendar feed:</p>
+<p>
+  Copy and paste the following link into your calendar application to subscribe
+  to the council calendar feed:
+</p>
 
-<a href="{{ site.council_calendar_feed}}" target="_blank">Council Calendar Feed</a>
+<a
+  href="{{  site.data.all_council_info_data.council_info.council_calendar_feed }}"
+  target="_blank"
+  >Council Calendar Feed</a
+>
+

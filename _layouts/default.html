@@ -21,9 +21,9 @@
     <meta property="og:description" content="{{ page.description }}">
     <meta name="twitter:description" content="{{ page.description }}">
     {% else %}
-    <meta name="description" content="{{ site.description }}">
-    <meta property="og:description" content="{{ site.description }}">
-    <meta name="twitter:description" content="{{ site.description }}">
+    <meta name="description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
+    <meta property="og:description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
+    <meta name="twitter:description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
     {% endif %}
     <link rel="canonical" href="{{site.url}}{{ page.url }}">
     <meta property="og:title" content="{{ page.title }}">
@@ -125,11 +125,11 @@
                   {% endif %}
                   <span>
                   {% if site.topbar.show_council_name %}
-                    {{ site.council_name }}
+                    {{ site.data.all_council_info_data.council_info.council_name }}
                   {% endif %}
                   Council
                   {% if site.topbar.show_council_number %}
-                    #{{ site.council_number }}
+                    #{{ site.data.all_council_info_data.council_info.council_number }}
                   {% endif %}
                 {% endif %}
                 </span>
@@ -177,7 +177,7 @@
                 Last updated on {{ site.time | date: "%B %d, %Y" }}
               </li>
               <li>
-                Contact us at&nbsp;<a href="mailto:{{site.council_email}}">{{site.council_email}}</a>
+                Contact us at&nbsp;<a href="mailto:{{site.data.all_council_info_data.council_info.council_public_email }}">{{site.data.all_council_info_data.council_info.council_public_email }}</a>
               </li>
               <li>
                 Made by&nbsp;<a href="https://www.cyberknight-websites.com/">Cyberknight Inc</a>

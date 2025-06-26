@@ -237,6 +237,12 @@ ul {
   width: 90vw;
 }
 
+.post-content{
+  a, p {
+    break-word: break-word;
+  }
+}
+
 .tag {
   // box-shadow: 0 0 0 0.35rem var(--shadow-color);
   transition: 0.2s ease-in;
