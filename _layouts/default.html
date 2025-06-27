@@ -79,8 +79,8 @@
           setTimeout(initHomepageParishMap, 50);
         }
         
-        // Initialize image lightbox for announcement attachments and member photos
-        if (relativeUrl.includes("/announcements/") || relativeUrl === "/members" || relativeUrl === "/members/") {
+        // Initialize image lightbox for announcement attachments, member photos, and post galleries
+        if (relativeUrl.includes("/announcements/") || relativeUrl === "/members" || relativeUrl === "/members/" || relativeUrl.includes("/posts/")) {
           setTimeout(dialogButtonInitializer, 50);
         }
       }

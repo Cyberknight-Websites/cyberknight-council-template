@@ -37,3 +37,25 @@ layout: default
 <div class="post-content">
   {{ content }}
 </div>
+
+{% if page.post_images and page.post_images.size > 0 %}
+<div class="post-gallery">
+  <h2>Gallery</h2>
+  <div class="post-gallery-grid">
+    {% for image in page.post_images %}
+    <div class="post-gallery-item">
+      <picture>
+        <img class="post-gallery-thumbnail announcement-img-lightbox" 
+             src="{{ image.thumbnail_url }}" 
+             alt="{{ image.caption }}"
+             data-full-image="{{ image.original_url }}"
+             style="height: 10rem; width: auto; object-fit: cover;"/>
+      </picture>
+      {% if image.caption and image.caption != "" %}
+      <p class="post-gallery-caption">{{ image.caption }}</p>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
