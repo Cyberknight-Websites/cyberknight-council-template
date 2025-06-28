@@ -90,6 +90,21 @@ begin
       file.puts "post_created_by: \"#{post_created_by}\""
       file.puts "post_last_edited_at: #{post_last_edited_at_unixtime}"
       file.puts "post_last_edited_by: \"#{post_last_edited_by}\""
+      
+      # Add post images sorted by order
+      if post['post_images'] && !post['post_images'].empty?
+        sorted_images = post['post_images'].sort_by { |img| img['order'] }
+        file.puts "post_images:"
+        sorted_images.each do |image|
+          file.puts "  - image_id: \"#{image['image_id']}\""
+          file.puts "    caption: #{escape_html_for_yaml(image['caption'])}"
+          file.puts "    order: #{image['order']}"
+          file.puts "    uploaded_at: #{image['uploaded_at']}"
+          file.puts "    thumbnail_url: \"#{image['thumbnail_url']}\""
+          file.puts "    original_url: \"#{image['original_url']}\""
+        end
+      end
+      
       file.puts "---"
       file.puts post['post_body'].gsub("<p><br></p>", "<p></p>")
     end
