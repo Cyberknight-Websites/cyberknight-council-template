@@ -2,8 +2,12 @@ permalink: /:slug
 theme_config:
   appearance: auto
   date_format: '%B %d %Y'
-# exclude:
-  # - 
+exclude:
+  - server_build_script.sh
+  - README.md
+  - Dockerfile
+  - Gemfile
+  - LICENSE
 highlighter: rouge
 sass:
   style: ':compressed'
@@ -17,22 +21,28 @@ jekyll-archives:
   enabled:
     - year
     - tags
+    - events_by_year
+    - announcements_by_year
   layouts:
-    year: year
+    year: posts_by_year
     tag: tag
+    events_by_year: events_by_year
+    announcements_by_year: announcements_by_year
   permalinks:
     year: /posts/:year/
     tag: /tag/:name/
+    events_by_year: /events/:year/
+    announcements_by_year: /announcements/:year/
 
 title: 'Knights of Columbus: Alhambra Council #2431'
 
 collections:
   events:
     output: true
-    permalink: /events/:path/
+    permalink: /events/:year/:month/:slug
   announcements:
     output: true
-    permalink: /announcements/:path/
+    permalink: /announcements/:year/:month/:slug
 
 events_date_format: '%B %d, %Y'
 events_time_format: '%-I:%M %p'

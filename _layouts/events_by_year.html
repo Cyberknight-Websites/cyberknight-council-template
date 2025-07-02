@@ -1,0 +1,9 @@
+---
+layout: default
+---
+
+{% assign year = page.date | date: "%Y" %}
+
+<h1>Events In {{ year }}</h1>
+
+{% include event_list.html year=year %}

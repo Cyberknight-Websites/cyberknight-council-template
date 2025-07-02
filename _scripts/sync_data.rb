@@ -30,6 +30,9 @@ begin
 
   puts "Synced all council #{council_number} data to _data/all_council_info_data.json"
 
+  website_tz = "US/Pacific"
+  tz = TZInfo::Timezone.get(website_tz)
+
   def escape_html_for_yaml(content)
     return '""' if content.nil? || content.empty?
     escaped = content.gsub('"', '\\"')  # Escape double quotes
@@ -40,7 +43,9 @@ begin
   # Delete existing event files
   Dir.glob('_events/*.md').each { |file| File.delete(file) }
   all_council_info_data['council_events'].each do |event|
-    filename = "_events/#{event['event_id'].downcase.gsub(' ', '_')}.md"
+    event_start_time_localized = tz.to_local(Time.at(event['event_start_time']))
+    sanitized_event_name = event['event_name'].downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(/^_|_$/, '')
+    filename = "_events/#{event_start_time_localized.strftime('%Y-%m-%d')}-#{sanitized_event_name}.md"
     File.open(filename, 'w') do |file|
       file.puts "---"
       file.puts "layout: event"
@@ -63,9 +68,6 @@ begin
   end
 
   puts "Generated #{all_council_info_data['council_events'].length} event files in _events directory"
-
-  website_tz = "US/Pacific"
-  tz = TZInfo::Timezone.get(website_tz)
 
   Dir.mkdir('_posts') unless Dir.exist?('_posts')
   # Delete existing post files
@@ -118,7 +120,11 @@ begin
   Dir.glob('_announcements/*.md').each { |file| File.delete(file) }
   if all_council_info_data.key?('council_announcements') && !all_council_info_data['council_announcements'].empty?
     all_council_info_data['council_announcements'].each do |announcement|
-      filename = "_announcements/#{announcement['announcement_id']}.md"
+      sent_at_localized = tz.to_local(Time.at(announcement['sent_at']))
+      # Use email subject if available, otherwise create generic title
+      title_for_filename = announcement['email_subject'] || "council_announcement"
+      sanitized_title = title_for_filename.downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(/^_|_$/, '')
+      filename = "_announcements/#{sent_at_localized.strftime('%Y-%m-%d')}-#{sanitized_title}.md"
       
       # Create announcement markdown file
       File.open(filename, 'w') do |file|

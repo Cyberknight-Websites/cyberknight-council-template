@@ -1,4 +1,4 @@
-{% assign sorted_events = site.data.all_council_info_data.council_events | sort: 'event_start_time' %}
+{% assign sorted_events = site.events | sort: 'event_start_time' %}
 {% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
 {% assign sorted_past_events = "" | split: "" %}
 {% assign sorted_upcoming_events = "" | split: "" %}
@@ -32,7 +32,7 @@
                     <p>{{ event.event_description }}</p>
                 </div>
                 <div class="event-list-item-inner-links">
-                    <a href="/events/{{ event.event_id }}">Event Details</a>
+                    <a href="{{ event.url | relative_url }}">Event Details</a>
                 </div>
             </div>
         </div>
@@ -57,7 +57,7 @@
                     <p>{{ event.event_description }}</p>
                 </div>
                 <div class="event-list-item-inner-links">
-                    <a href="/events/{{ event.event_id }}">Event Details</a>
+                    <a href="{{ event.url | relative_url }}">Event Details</a>
                 </div>
             </div>
             <!-- <div class="event-list-item-datetime">
