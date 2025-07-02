@@ -1,0 +1,32 @@
+{% assign sorted_events = site.events | sort: 'event_start_time' | reverse %}
+{% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
+
+<div class="events-list-container">
+  {% for event in sorted_events limit:include.limit %}
+  <div class="events-list-item">
+    <div class="event-list-item-date">
+      <p>{{ event.event_start_time | date: site.events_date_format }}</p>
+    </div>
+    <div class="event-list-item-inner">
+      <div class="event-list-item-inner-info">
+        <h3>{{ event.event_name }}</h3>
+        <div style="display: flex; flex-wrap: wrap">
+          <p>
+            <strong>Date:</strong> {{ event.event_start_time | date: site.events_date_format }}
+          </p>
+          {% if event.location_name %}
+          <p style="margin-left: 1rem">
+            <strong>Location:</strong> {{ event.location_name }}
+          </p>
+          {% endif %}
+        </div>
+        <!-- print event description -->
+        <p>{{ event.event_description | strip_html | truncatewords: 24 }}</p>
+      </div>
+      <div class="event-list-item-inner-links">
+        <a href="{{ event.url | relative_url }}">View Details</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
