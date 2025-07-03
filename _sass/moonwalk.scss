@@ -102,6 +102,7 @@ strong {
 blockquote {
   background-color: var(--bg-secondary);
   border: 1px var(--border) solid;
+  margin: 0rem;
 }
 
 *:target { background-color: var(--bg-secondary); }
