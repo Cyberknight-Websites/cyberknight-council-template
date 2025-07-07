@@ -47,7 +47,7 @@ layout: default
       <picture>
         <img class="post-gallery-thumbnail announcement-img-lightbox" 
              src="{{ image.thumbnail_url }}" 
-             alt="{{ image.caption }}"
+             {% if forloop.index > 3 %}loading="lazy"{% endif %}
              data-full-image="{{ image.original_url }}"
              style="height: 10rem; width: auto; object-fit: cover;"/>
       </picture>
