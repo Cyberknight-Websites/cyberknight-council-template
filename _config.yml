@@ -22,23 +22,14 @@ jekyll-archives:
     - year
     - month
     - tags
-    - events_by_year
-    - events_by_month
-    - announcements_by_year
   layouts:
     year: posts_by_year
     month: posts_by_month
     tag: tag
-    events_by_year: events_by_year
-    events_by_month: events_by_month
-    announcements_by_year: announcements_by_year
   permalinks:
     year: /posts/:year/
     month: /posts/:year/:month/
     tag: /tag/:name/
-    events_by_year: /events/:year/
-    events_by_month: /events/:year/:month/
-    announcements_by_year: /announcements/:year/
 
 title: 'Knights of Columbus: Alhambra Council #2431'
 
