@@ -100,7 +100,8 @@ begin
         sorted_images.each do |image|
           file.puts "  - image_id: \"#{image['image_id']}\""
           file.puts "    caption: #{escape_html_for_yaml(image['caption'])}"
-          file.puts "    alt_text: #{escape_html_for_yaml(image['alt_text'])}"
+          alt_text_fixed = image['alt_text'].nil? ? '""' : "\"#{image['alt_text'].gsub('"', "'")}\""
+          file.puts "    alt_text: #{alt_text_fixed}"
           file.puts "    order: #{image['order']}"
           file.puts "    uploaded_at: #{image['uploaded_at']}"
           file.puts "    thumbnail_url: \"#{image['thumbnail_url']}\""

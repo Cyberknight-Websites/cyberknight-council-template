@@ -13,6 +13,8 @@
 @import "ios";
 @import "android";
 @import "links";
+@import "default/links";
+@import "default/boxes";
 
 {% assign w_desktop_width = site.layout.w_desktop_width %}
 

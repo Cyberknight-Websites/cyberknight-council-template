@@ -1,0 +1,18 @@
+.cyberknight_link {
+  color: var(--link-text);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-decoration-thickness: 0.1rem;
+  text-underline-offset: 0.3rem;
+  transition: 0.2s ease-out;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family:  "Roboto Slab";
+}
+
+.cyberknight_link:hover {
+  text-decoration-color: var(--link-underline);
+  color: var(--link-underline);
+}
+
