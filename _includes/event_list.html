@@ -1,8 +1,26 @@
 {% assign sorted_events = site.events | sort: 'event_start_time' | reverse %}
 {% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
+{% assign filtered_events = "" | split: "" %}
+{% for event in sorted_events %}
+  {% if event.event_start_time and event.event_start_time != "" %}
+    {% assign event_year = event.event_start_time | date: '%Y' %}
+    {% assign event_month = event.event_start_time | date: '%m' %}
+    {% if include.year and include.month %}
+      {% if event_year == include.year and event_month == include.month %}
+        {% assign filtered_events = filtered_events | push: event %}
+      {% endif %}
+    {% elsif include.year %}
+      {% if event_year == include.year %}
+        {% assign filtered_events = filtered_events | push: event %}
+      {% endif %}
+    {% else %}
+      {% assign filtered_events = filtered_events | push: event %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
 
 <div class="events-list-container">
-  {% for event in sorted_events limit:include.limit %}
+  {% for event in filtered_events limit:include.limit %}
   <div class="events-list-item">
     <div class="event-list-item-date">
       <p>{{ event.event_start_time | date: site.events_date_format }}</p>
