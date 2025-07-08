@@ -19,7 +19,9 @@ layout: default
     }}"
   </p>
   <p style="text-align: center; max-width: 34rem; margin: 0 auto">
-    {{  site.data.all_council_info_data.council_website_settings.homepage_description }}
+    {{
+    site.data.all_council_info_data.council_website_settings.homepage_description
+    }}
   </p>
 </div>
 
@@ -130,22 +132,24 @@ site.data.all_council_info_data.council_parishes.size == 1 %}
   {% endif %} {% endif %} {% if site.homepage.parishes.show_parish_list %}
   <div class="homepage-parish-locations">
     {% for parish in site.data.all_council_info_data.council_parishes %}
-    <div class="homepage-parish-location">
+    <div class="homepage-parish-location cyberknight_box">
       <div class="homepage-parish-location-inner">
         <h3>{{ parish.parish_name }}</h3>
         <p>{{ parish.parish_address | replace: ", USA", "" }}</p>
         <div class="homepage-parish-location-inner-links">
           <a
+            class="cyberknight_link box_bottom_link"
             href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}"
             >Get Directions</a
           >
           {% if site.homepage.parishes.parish_map_type == "interactive" %}
-          <a
-            class="center-on-map-link"
+          <button
+            class="center-on-map-link cyberknight_link box_bottom_link"
             data-lat="{{ parish.gps_coordinates[0] }}"
             data-lng="{{ parish.gps_coordinates[1] }}"
-            >Center on Map</a
           >
+            Center on Map
+          </button>
           {% endif %}
         </div>
       </div>

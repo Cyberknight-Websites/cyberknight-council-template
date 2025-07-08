@@ -93,8 +93,8 @@ async function initHomepageParishMap() {
     lng /= markerCoordinates.length;
     map.setView([lat, lng], 13);
 
-    // Add event listeners to 'Center on Map' links
-    const links = document.querySelectorAll('.homepage-parish-location-inner-links a.center-on-map-link');
+    // Add event listeners to 'Center on Map' buttons
+    const links = document.querySelectorAll('.homepage-parish-location-inner-links button.center-on-map-link');
     links.forEach(function(link) {
       link.addEventListener('click', function(event) {
         event.preventDefault();
