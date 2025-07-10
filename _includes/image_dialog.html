@@ -9,19 +9,64 @@
     const dialog = document.querySelector("dialog");
     const dialogContent = document.getElementById("img-dialog-content");
     const closeButton = document.getElementById("img-dialog-close");
+    const prevButton = document.getElementById("img-dialog-prev");
+    const nextButton = document.getElementById("img-dialog-next");
     const body = document.querySelector("body");
+    
+    var isDesktop = window.matchMedia("(min-width: 800px) and (orientation: landscape) and (hover: hover) and (pointer: fine)");
+    let currentImageOrder = null;
+    let galleryImages = Array.from(all_lightbox_images);
+
+    // Function to update arrow button visibility
+    function updateArrowVisibility() {
+      const shouldShowArrows = isDesktop.matches && galleryImages.length > 1;
+      prevButton.style.display = shouldShowArrows ? "flex" : "none";
+      nextButton.style.display = shouldShowArrows ? "flex" : "none";
+    }
+
+    // Function to show image by order
+    function showImageByOrder(order) {
+      const targetImage = galleryImages.find(img => img.getAttribute("data-image-order") === order.toString());
+      if (targetImage) {
+        const fullImageUrl = targetImage.getAttribute("data-full-image") || targetImage.src;
+        const imgHtml = `<img src="${fullImageUrl}" alt="Full size image">`;
+        dialogContent.innerHTML = imgHtml;
+        currentImageOrder = order;
+      }
+    }
+
+    // Function to navigate to previous image
+    function navigatePrevious() {
+      if (!currentImageOrder || galleryImages.length <= 1) return;
+      
+      const orders = galleryImages.map(img => parseInt(img.getAttribute("data-image-order"))).sort((a, b) => a - b);
+      const currentIndex = orders.indexOf(currentImageOrder);
+      const previousIndex = currentIndex === 0 ? orders.length - 1 : currentIndex - 1;
+      showImageByOrder(orders[previousIndex]);
+    }
+
+    // Function to navigate to next image
+    function navigateNext() {
+      if (!currentImageOrder || galleryImages.length <= 1) return;
+      
+      const orders = galleryImages.map(img => parseInt(img.getAttribute("data-image-order"))).sort((a, b) => a - b);
+      const currentIndex = orders.indexOf(currentImageOrder);
+      const nextIndex = currentIndex === orders.length - 1 ? 0 : currentIndex + 1;
+      showImageByOrder(orders[nextIndex]);
+    }
 
     // Handle announcement-img-lightbox class images (including those inside pictures)
     all_lightbox_images.forEach((img) => {
       img.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation(); // Prevent picture click event from triggering
-        const fullImageUrl = img.getAttribute("data-full-image") || img.src;
-        const imgHtml = `<img src="${fullImageUrl}" alt="Full size image">`;
-        dialogContent.innerHTML = imgHtml;
+        const order = parseInt(img.getAttribute("data-image-order"));
+        currentImageOrder = order;
+        showImageByOrder(order);
 
         dialog.showModal();
         body.style.overflow = "hidden";
+        updateArrowVisibility();
       });
     });
 
@@ -51,6 +96,30 @@
       dialog.close();
       body.style.overflow = "";
     });
+
+    // Handle arrow button clicks
+    prevButton.addEventListener("click", navigatePrevious);
+    nextButton.addEventListener("click", navigateNext);
+
+    // Handle keyboard navigation
+    document.addEventListener("keydown", (event) => {
+      if (!dialog.open) return;
+      
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        navigatePrevious();
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        navigateNext();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+        body.style.overflow = "";
+      }
+    });
+
+    // Update arrow visibility on resize/orientation change
+    isDesktop.addEventListener("change", updateArrowVisibility);
 
     dialog.addEventListener("click", (event) => {
       const dialogDimensions = dialog.getBoundingClientRect();
@@ -89,6 +158,56 @@
     <img
       src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/xmark.svg"
       alt="Close"
+      style="width: 2rem; height: 2rem"
+    />
+  </button>
+  <button
+    id="img-dialog-prev"
+    style="
+      position: fixed;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3rem;
+      height: 3rem;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <img
+      src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/chevron-left.svg"
+      alt="Previous"
+      style="width: 2rem; height: 2rem"
+    />
+  </button>
+  <button
+    id="img-dialog-next"
+    style="
+      position: fixed;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3rem;
+      height: 3rem;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    "
+  >
+    <img
+      src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/chevron-right.svg"
+      alt="Next"
       style="width: 2rem; height: 2rem"
     />
   </button>
