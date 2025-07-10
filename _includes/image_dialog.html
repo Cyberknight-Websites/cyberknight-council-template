@@ -6,6 +6,7 @@
         const all_lightbox_images = document.querySelectorAll('.announcement-img-lightbox');
         const dialog = document.querySelector('dialog')
         const dialogContent = document.getElementById('img-dialog-content');
+        const closeButton = document.getElementById('img-dialog-close');
         const body = document.querySelector('body');
     
         // Handle announcement-img-lightbox class images (including those inside pictures)
@@ -40,6 +41,12 @@
             });
         });
     
+        // Handle close button click
+        closeButton.addEventListener('click', () => {
+            dialog.close();
+            body.style.overflow = '';
+        });
+    
         dialog.addEventListener('click', (event) => {
             const dialogDimensions = dialog.getBoundingClientRect()
             if (
@@ -56,6 +63,9 @@
     </script>
     
     <dialog id="img-dialog">
+        <button id="img-dialog-close" style="position: absolute; top: 1rem; right: 1rem; width: 2rem; height: 2rem; background: white; border: none; border-radius: 50%; cursor: pointer; z-index: 1000; display: flex; align-items: center; justify-content: center;">
+            <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/xmark.svg" alt="Close" style="width: 1rem; height: 1rem;">
+        </button>
         <div id="img-dialog-content"></div>
     </dialog>
     
