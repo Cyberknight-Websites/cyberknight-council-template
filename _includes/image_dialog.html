@@ -98,8 +98,14 @@
     });
 
     // Handle arrow button clicks
-    prevButton.addEventListener("click", navigatePrevious);
-    nextButton.addEventListener("click", navigateNext);
+    prevButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      navigatePrevious();
+    });
+    nextButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      navigateNext();
+    });
 
     // Handle keyboard navigation
     document.addEventListener("keydown", (event) => {
