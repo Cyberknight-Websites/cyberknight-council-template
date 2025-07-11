@@ -50,6 +50,7 @@ layout: default
              alt="{{ image.alt_text }}"
              {% if forloop.index > 3 %}loading="lazy"{% endif %}
              data-full-image="{{ image.original_url }}"
+             data-image-order="{{ image.order }}"
              style="height: 10rem; width: auto; object-fit: cover;"/>
       </picture>
       {% if image.caption and image.caption != "" %}

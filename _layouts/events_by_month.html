@@ -1,0 +1,11 @@
+---
+layout: default
+---
+
+{% assign year = page.date | date: "%Y" %}
+{% assign month = page.date | date: "%B" %}
+{% assign month_num = page.date | date: "%m" %}
+
+<h1>Events In {{ month }} {{ year }}</h1>
+
+{% include event_list.html year=year month=month_num %}
