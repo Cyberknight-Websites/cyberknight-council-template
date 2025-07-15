@@ -35,7 +35,6 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="{{ page.url }}">
     <meta name="twitter:title" content="{{ page.title }}">
-    <meta name="view-transition" content="origin">
   
     <!-- Favicon -->
     <link  rel="apple-touch-icon"  sizes="180x180"  href="{{ site.url }}/assets/favicon/apple-touch-icon.png">
@@ -86,9 +85,6 @@
       }
 
       document.addEventListener("DOMContentLoaded", onNavigateOrLoad);
-      // if (window.navigation) {
-      //   window.navigation.addEventListener("navigatesuccess", onNavigateOrLoad);
-      // }
     </script>
     <script src="{{ '/assets/js/leaflet.js' | relative_url }}"></script>
     <script src="{{ '/assets/js/toggle_theme.js' | relative_url }}"></script>
@@ -187,69 +183,5 @@
         </div>
       </div>
     </main>
-    <script>
-      function updateContent(html) {
-        const data = new DOMParser().parseFromString(html, 'text/html');
-        document.documentElement.scrollTop = 0;
-        document.body.querySelector('.w').innerHTML = data.body.querySelector('.w').innerHTML;
-        document.title = data.title;
-        onNavigateOrLoad(); // Add this line to trigger the function after content updates
-      }
-
-      function handleLinkClick(event) {
-        const link = event.target.closest('a');
-        if (!link) return;
-        
-        // Ignore if it's an external link, has a target, or is a download
-        if (
-          !link.href ||
-          link.target ||
-          link.download ||
-          link.href.startsWith('mailto:') ||
-          link.href.startsWith('tel:') ||
-          !link.href.startsWith(window.location.origin)
-        ) {
-          return;
-        }
-
-        event.preventDefault();
-
-        if (!document.startViewTransition) {
-          // Fallback for browsers without view transitions
-          fetch(link.href)
-            .then(response => response.text())
-            .then(html => {
-              updateContent(html);
-              history.pushState({}, '', link.href);
-            });
-          return;
-        }
-
-        // With view transitions
-        document.startViewTransition(async () => {
-          const response = await fetch(link.href);
-          const text = await response.text();
-          history.pushState({}, '', link.href);
-          updateContent(text);
-        });
-      }
-
-      // Handle back/forward navigation
-      window.addEventListener('popstate', async () => {
-        const response = await fetch(window.location.href);
-        const text = await response.text();
-        
-        if (document.startViewTransition) {
-          document.startViewTransition(() => {
-            updateContent(text);
-          });
-        } else {
-          updateContent(text);
-        }
-      });
-
-      // Add click handler to document
-      document.addEventListener('click', handleLinkClick);
-    </script>
   </body>
 </html>
