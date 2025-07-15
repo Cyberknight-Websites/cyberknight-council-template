@@ -15,7 +15,7 @@
     
     var isDesktop = window.matchMedia("(min-width: 800px) and (orientation: landscape) and (hover: hover) and (pointer: fine)");
     let currentImageOrder = null;
-    let galleryImages = Array.from(all_lightbox_images);
+    let galleryImages = Array.from(all_lightbox_images).filter(img => img.hasAttribute('data-image-order'));
 
     // Function to update arrow button visibility
     function updateArrowVisibility() {
@@ -37,7 +37,7 @@
 
     // Function to navigate to previous image
     function navigatePrevious() {
-      if (!currentImageOrder || galleryImages.length <= 1) return;
+      if (currentImageOrder === null || galleryImages.length <= 1) return;
       
       const orders = galleryImages.map(img => parseInt(img.getAttribute("data-image-order"))).sort((a, b) => a - b);
       const currentIndex = orders.indexOf(currentImageOrder);
@@ -47,7 +47,7 @@
 
     // Function to navigate to next image
     function navigateNext() {
-      if (!currentImageOrder || galleryImages.length <= 1) return;
+      if (currentImageOrder === null || galleryImages.length <= 1) return;
       
       const orders = galleryImages.map(img => parseInt(img.getAttribute("data-image-order"))).sort((a, b) => a - b);
       const currentIndex = orders.indexOf(currentImageOrder);
@@ -60,9 +60,19 @@
       img.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation(); // Prevent picture click event from triggering
-        const order = parseInt(img.getAttribute("data-image-order"));
-        currentImageOrder = order;
-        showImageByOrder(order);
+        
+        if (img.hasAttribute('data-image-order')) {
+          // Handle images with gallery navigation
+          const order = parseInt(img.getAttribute("data-image-order"));
+          currentImageOrder = order;
+          showImageByOrder(order);
+        } else {
+          // Handle individual images without gallery navigation
+          const fullImageUrl = img.getAttribute("data-full-image") || img.src;
+          const imgHtml = `<img src="${fullImageUrl}" alt="Full size image">`;
+          dialogContent.innerHTML = imgHtml;
+          currentImageOrder = null;
+        }
 
         dialog.showModal();
         body.style.overflow = "hidden";
@@ -81,7 +91,6 @@
         // Copy the contents of the clicked picture into the dialog content
         let htmlContent = event.target.outerHTML;
         htmlContent = htmlContent
-          .replace(/\?tr=w-480/g, "")
           .replace(/max-height: 60vh/g, "")
           .replace(/border-radius: 1rem;/g, "");
         dialogContent.innerHTML = htmlContent;
