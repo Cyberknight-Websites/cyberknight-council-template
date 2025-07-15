@@ -4,7 +4,7 @@ layout: default
 
 <h1>Members</h1>
 
-<h2>Officers (2024-2025)</h2>
+<h2>Current Officers</h2>
 <div class="officer-container">
   {% for officer in site.data.all_council_info_data.council_officers %}
   <div class="eboard-member">
@@ -17,6 +17,7 @@ layout: default
         src="{{ thumbnail_src }}"
         alt="A headshot of {{ officer.officer_position }} {{ officer.officer_name }}"
         data-full-image="{{ original_src }}"
+        data-image-order="{{ forloop.index }}"
       />
       {% elsif legacy_src %}
       <img
