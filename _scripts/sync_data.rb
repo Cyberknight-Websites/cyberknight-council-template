@@ -86,7 +86,6 @@ begin
       file.puts "---"
       file.puts "layout: post"
       file.puts "title: \"#{post['post_title']}\""
-      file.puts "description: \"#{post['post_description']}\""
       file.puts "permalink: /posts/:year/:month/:slug"
       file.puts "post_created_at: #{post_created_at_unixtime}"
       file.puts "post_created_by: \"#{post_created_by}\""
