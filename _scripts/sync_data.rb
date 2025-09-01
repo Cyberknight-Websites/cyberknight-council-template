@@ -6,35 +6,36 @@ require 'tzinfo'
 begin
   options = {}
   OptionParser.new do |opts|
-    opts.banner = "Usage: sync_data.rb [options]"
+    opts.banner = 'Usage: sync_data.rb [options]'
 
-    opts.on("-c", "--council COUNCIL_NUMBER", "Council number") do |c|
+    opts.on('-c', '--council COUNCIL_NUMBER', 'Council number') do |c|
       options[:council_number] = c
     end
 
-    opts.on("-u", "--url KOC_URL", "Kocp URL") do |u|
+    opts.on('-u', '--url KOC_URL', 'Kocp URL') do |u|
       options[:kocp_url] = u
     end
   end.parse!
 
   council_number = options[:council_number] || 2431
-  kocp_url = options[:kocp_url] || "http://127.0.0.1"
+  kocp_url = options[:kocp_url] || 'http://127.0.0.1'
 
   all_council_info_api_url = "#{kocp_url}/public_api/get_all_council_info/#{council_number}"
   all_council_info_api_response = URI.open(all_council_info_api_url).read
   all_council_info_data = JSON.parse(all_council_info_api_response)
-  File.open("_data/all_council_info_data.json", "w") do |f|
+  File.open('_data/all_council_info_data.json', 'w') do |f|
     f.write(all_council_info_data.to_json)
   end
 
   puts "Synced all council #{council_number} data to _data/all_council_info_data.json"
 
-  website_tz = "US/Pacific"
+  website_tz = 'US/Pacific'
   tz = TZInfo::Timezone.get(website_tz)
 
   def escape_html_for_yaml(content)
     return '""' if content.nil? || content.empty?
-    escaped = content.gsub('"', '\\"')  # Escape double quotes
+
+    escaped = content.gsub('"', '\\"') # Escape double quotes
     "\"#{escaped}\""
   end
 
@@ -43,11 +44,13 @@ begin
   Dir.glob('_events/*.md').each { |file| File.delete(file) }
   all_council_info_data['council_events'].each do |event|
     event_start_time_localized = tz.to_local(Time.at(event['event_start_time']))
-    sanitized_event_name = event['event_name'].downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(/^_|_$/, '')
+    sanitized_event_name = event['event_name'].downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(
+      /^_|_$/, ''
+    )
     filename = "_events/#{event_start_time_localized.strftime('%Y-%m-%d')}-#{sanitized_event_name}.md"
     File.open(filename, 'w') do |file|
-      file.puts "---"
-      file.puts "layout: event"
+      file.puts '---'
+      file.puts 'layout: event'
       file.puts "title: #{escape_html_for_yaml(event['event_name'])}"
       file.puts "event_name: #{escape_html_for_yaml(event['event_name'])}"
       file.puts "event_description: #{escape_html_for_yaml(event['event_description'])}"
@@ -62,7 +65,7 @@ begin
       file.puts "location_gps_coordinates_lat: #{event['location_coordinates'][0]}"
       file.puts "location_gps_coordinates_lon: #{event['location_coordinates'][1]}"
       file.puts "event_last_updated: #{event['event_last_updated']}"
-      file.puts "---"
+      file.puts '---'
     end
   end
 
@@ -79,22 +82,23 @@ begin
     post_last_edited_at_unixtime = post_edit_log[-1]['edit_time']
     post_last_edited_at_localized = tz.to_local(Time.at(post_last_edited_at_unixtime))
     post_last_edited_by = post_edit_log[-1]['member_name']
-    
-    filename = "_posts/#{post_created_at_localized.strftime('%Y-%m-%d')}-#{post['post_title'].downcase.gsub(' ', '_')}.md"
+
+    filename = "_posts/#{post_created_at_localized.strftime('%Y-%m-%d')}-#{post['post_title'].downcase.gsub(' ',
+                                                                                                            '_')}.md"
     File.open(filename, 'w') do |file|
-      file.puts "---"
-      file.puts "layout: post"
+      file.puts '---'
+      file.puts 'layout: post'
       file.puts "title: \"#{post['post_title']}\""
-      file.puts "permalink: /posts/:year/:month/:slug"
+      file.puts 'permalink: /posts/:year/:month/:slug'
       file.puts "post_created_at: #{post_created_at_unixtime}"
       file.puts "post_created_by: \"#{post_created_by}\""
       file.puts "post_last_edited_at: #{post_last_edited_at_unixtime}"
       file.puts "post_last_edited_by: \"#{post_last_edited_by}\""
-      
+
       # Add post images sorted by order
       if post['post_images'] && !post['post_images'].empty?
         sorted_images = post['post_images'].sort_by { |img| img['order'] }
-        file.puts "post_images:"
+        file.puts 'post_images:'
         sorted_images.each do |image|
           file.puts "  - image_id: \"#{image['image_id']}\""
           file.puts "    caption: #{escape_html_for_yaml(image['caption'])}"
@@ -106,9 +110,9 @@ begin
           file.puts "    original_url: \"#{image['original_url']}\""
         end
       end
-      
-      file.puts "---"
-      file.puts post['post_body'].gsub("<p><br></p>", "<p></p>")
+
+      file.puts '---'
+      file.puts post['post_body'].gsub('<p><br></p>', '<p></p>')
     end
   end
 
@@ -122,18 +126,20 @@ begin
     all_council_info_data['council_announcements'].each do |announcement|
       sent_at_localized = tz.to_local(Time.at(announcement['sent_at']))
       # Use email subject if available, otherwise create generic title
-      title_for_filename = announcement['email_subject'] || "council_announcement"
-      sanitized_title = title_for_filename.downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(/^_|_$/, '')
+      title_for_filename = announcement['email_subject'] || 'council_announcement'
+      sanitized_title = title_for_filename.downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(
+        /^_|_$/, ''
+      )
       filename = "_announcements/#{sent_at_localized.strftime('%Y-%m-%d')}-#{sanitized_title}.md"
-      
+
       # Create announcement markdown file
       File.open(filename, 'w') do |file|
-        file.puts "---"
-        file.puts "layout: announcement"
+        file.puts '---'
+        file.puts 'layout: announcement'
         file.puts "announcement_id: #{announcement['announcement_id']}"
         file.puts "announcement_types: #{announcement['announcement_types'].to_json}"
         file.puts "sent_at: #{announcement['sent_at']}"
-        
+
         # Include email content if it exists
         if announcement['announcement_types'].include?('email')
           file.puts "title: #{escape_html_for_yaml(announcement['email_subject'])}"
@@ -144,37 +150,34 @@ begin
             file.puts "email_attachment_urls: #{announcement['email_attachment_urls'].to_json}"
           end
         else
-          file.puts "title: Council Announcement"
+          file.puts 'title: Council Announcement'
         end
-        
+
         # Include SMS content if it exists
         if announcement['announcement_types'].include?('sms')
           file.puts "sms_body: #{escape_html_for_yaml(announcement['sms_body'])}"
         end
-        
+
         # Include author if it exists
-        if announcement['author']
-          file.puts "author: #{escape_html_for_yaml(announcement['author'])}"
-        end
-        
-        file.puts "---"
+        file.puts "author: #{escape_html_for_yaml(announcement['author'])}" if announcement['author']
+
+        file.puts '---'
       end
     end
     puts "Generated #{all_council_info_data['council_announcements'].length} announcement files in _announcements directory"
   else
-    puts "No announcements found in API response"
+    puts 'No announcements found in API response'
   end
 
-Dir.mkdir('assets/opengraph') unless Dir.exist?('assets/opengraph')
+  Dir.mkdir('assets/opengraph') unless Dir.exist?('assets/opengraph')
 
   # Generate robots.txt
   File.open('robots.txt', 'w') do |file|
-    file.puts "User-agent: *"
-    file.puts "Allow: /"
+    file.puts 'User-agent: *'
+    file.puts 'Allow: /'
     file.puts "Sitemap: #{all_council_info_data['council_website_settings']['website_url']}/sitemap.xml"
   end
-  puts "Generated robots.txt"
-
+  puts 'Generated robots.txt'
 
   puts "\nEditing _config.yml..."
   config_path = '_config.yml'
@@ -189,7 +192,6 @@ Dir.mkdir('assets/opengraph') unless Dir.exist?('assets/opengraph')
   else
     puts "Warning: #{config_path} not found, skipping config update."
   end
-
 rescue StandardError => e
   puts "An error occurred: #{e.message}"
 end
