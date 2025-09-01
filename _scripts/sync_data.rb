@@ -1,7 +1,6 @@
 require 'open-uri'
 require 'json'
 require 'optparse'
-require 'rmagick'
 require 'tzinfo'
 
 begin
@@ -166,26 +165,7 @@ begin
     puts "No announcements found in API response"
   end
 
-  Dir.mkdir('assets/opengraph') unless Dir.exist?('assets/opengraph')
-
-  # homepage_opengraph = Magick::Image.read('assets/opengraph/opengraph-website-title-template.png').first
-  # draw_text = Magick::Draw.new
-  # draw_text.font = 'assets/fonts/RobotoSlab-Bold.ttf'
-  # draw_text.gravity = Magick::CenterGravity
-  # draw_text.fill = '#112764'
-  # text_to_draw = 'Alhambra Council'
-  # if text_to_draw.length > 34
-  #   draw_text.pointsize = 28
-  # elsif text_to_draw.length > 28
-  #   draw_text.pointsize = 32
-  # elsif text_to_draw.length > 22
-  #   draw_text.pointsize = 40
-  # else
-  #   draw_text.pointsize = 50
-  # end
-  # draw_text.annotate(homepage_opengraph, 0, 0, 0, 70, text_to_draw)
-  # homepage_opengraph.write('assets/opengraph/opengraph-website-title.png')
-  # puts "Generated site opengraph image with title: #{text_to_draw}"
+Dir.mkdir('assets/opengraph') unless Dir.exist?('assets/opengraph')
 
   # Generate robots.txt
   File.open('robots.txt', 'w') do |file|
@@ -202,9 +182,7 @@ begin
     config_content = File.read(config_path)
 
     council_site_url = all_council_info_data['council_website_settings']['website_url']
-    # council_opengraph_url = all_council_info_data['council_info']['council_opengraph_url']
     updated_content = config_content.gsub(/COUNCIL_SITE_URL/, council_site_url)
-    # updated_content = updated_content.gsub(/COUNCIL_OPENGRAPH_URL/, council_opengraph_url)
 
     File.write(config_path, updated_content)
     puts "Updated #{config_path}"
