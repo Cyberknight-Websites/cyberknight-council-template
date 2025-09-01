@@ -15,7 +15,6 @@ gem 'google-protobuf', force_ruby_platform: true if RUBY_PLATFORM.include?('linu
 
 gem "optparse", "~> 0.5.0"
 
-gem "rmagick", "~> 6.0"
 
 gem "tzinfo", "~> 2.0"
 gem "tzinfo-data"
