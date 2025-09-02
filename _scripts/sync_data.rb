@@ -126,7 +126,7 @@ begin
     all_council_info_data['council_announcements'].each do |announcement|
       sent_at_localized = tz.to_local(Time.at(announcement['sent_at']))
       # Use email subject if available, otherwise create generic title
-      title_for_filename = announcement['email_subject'] || 'council_announcement'
+      title_for_filename = announcement['email_subject'] || announcement['sent_at'].to_s
       sanitized_title = title_for_filename.downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(
         /^_|_$/, ''
       )
