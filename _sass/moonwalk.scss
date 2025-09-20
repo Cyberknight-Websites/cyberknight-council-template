@@ -516,7 +516,13 @@ div.event-list-container {
         p {
           font-size: 0.84rem;
           margin: 0rem;
-          line-height: 1.1rem;
+          line-height: 1rem;
+          overflow: hidden;  
+          max-height:5rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 5; /* show exactly 5 lines */
+          -webkit-box-orient: vertical;
+          text-overflow: ellipsis;
         }
       }
       div.event-list-item-inner-links{

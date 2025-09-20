@@ -16,7 +16,7 @@ layout: default
         <h2>Location</h2>
         {% if page.location_address and page.location_address.size > 2 %}
             <p>
-                <b>Address</b>: <a href="http://maps.apple.com/?near={{ page.location_gps_coordinates_lat }},{{ page.location_gps_coordinates_lon }}&q={{ page.location_name | replace: " ", "+" }}+{{ page.location_address }}">{{ page.location_address }}</a>
+                <b>Address</b>: <a href="{{ page.location_map_link }}">{{ page.location_address }}</a>
             </p>
             <div id="map"
                  class="event-page-map"
@@ -33,4 +33,3 @@ layout: default
         <!-- <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p> -->
     </div>
 </div>
-
