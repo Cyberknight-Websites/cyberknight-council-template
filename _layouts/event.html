@@ -9,10 +9,10 @@ layout: default
             <h2>Details</h2>
             <p>{{ page.event_details }}</p>
         {% endif %}
-        <h2>Date</h2>
-        <p>{{ page.event_start_time | date: "%m/%d/%Y" }} ({{ page.event_start_time | date: "%A" }})</p>
-        <h2>Time</h2>
-        <p>{{ page.event_start_time | date: "%-I:%M %p" }} ({{ page.timezone | replace: "US/", "" }})</p>
+        <h2>Date/Time</h2>
+        <p>
+            {{ page.event_start_time | date: "%m/%d/%Y (%A) starting at %-I:%M %p" }} ({{ page.timezone | replace: "US/", "" }}).
+        </p>
         <h2>Location</h2>
         {% if page.location_address and page.location_address.size > 2 %}
             <p>

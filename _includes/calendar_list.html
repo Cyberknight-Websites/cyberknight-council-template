@@ -29,7 +29,7 @@
                             </p>
                             {% if event.location_address %}
                                 <p>
-                                    At <a href="http://maps.apple.com/?near={{ event.location_coordinates[0] }},{{ event.location_coordinates[1] }}&q={{ event.location_address | replace: " ", "+" }}">{{ event.location_name }}</a>
+                                    At <a href="{{ event.location_map_link }}">{{ event.location_address_name }}</a>
                                 </p>
                             {% endif %}
                             <p>{{ event.event_details | strip_html | truncatewords: 50 }}</p>
@@ -58,9 +58,11 @@
                             <p>
                                 {{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }}
                             </p>
-                            <p>
-                                At <a href="http://maps.apple.com/?near={{ event.location_coordinates[0] }},{{ event.location_coordinates[1] }}&q={{ event.location_name | replace: " ", "+" }}+{{ event.location_address | replace: " ", "+" }}">{{ event.location_name }}</a>
-                            </p>
+                            {% if event.location_address %}
+                                <p>
+                                    At <a href="{{ event.location_map_link }}">{{ event.location_address_name }}</a>
+                                </p>
+                            {% endif %}
                             <p>{{ event.event_details | strip_html | truncatewords: 50 }}</p>
                         </div>
                         <div class="event-list-item-inner-links">
