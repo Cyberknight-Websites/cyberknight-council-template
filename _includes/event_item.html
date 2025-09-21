@@ -7,9 +7,7 @@
             <h3>
                 <a href="{{ include.event.url | relative_url }}">{{ include.event.event_name }}</a>
             </h3>
-            <p>
-                {{ include.event.event_start_time | date: site.events_time_format }} to {{ include.event.event_end_time | date: site.events_time_format }}
-            </p>
+            <p>Starting at {{ include.event.event_start_time | date: site.events_time_format }}</p>
             {% if include.event.location_address %}
                 <p>
                     At <a href="{{ include.event.location_map_link }}">{{ include.event.location_address_name }}</a>
@@ -19,4 +17,3 @@
         </div>
     </div>
 </div>
-
