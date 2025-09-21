@@ -5,28 +5,31 @@ layout: default
 <div class="event-page-container">
     <h1>{{ page.event_name }}</h1>
     <div class="event-page-content">
-        <h2>Description</h2>
-        <p>{{ page.event_description }}</p>
         {% if page.event_details and page.event_details.size > 2 %}
-        <h2>Details</h2>
-        <p>{{ page.event_details }}</p>
+            <h2>Details</h2>
+            <p>{{ page.event_details }}</p>
         {% endif %}
         <h2>Date/Time</h2>
-        <p><b>Date</b>: {{ page.event_start_time | date: "%m/%d/%Y" }} ({{ page.event_start_time | date: "%A" }})</p>
-        <p><b>Time</b>: {{ page.event_start_time | date: "%-I:%M %p" }} to {{ page.event_end_time | date: "%-I:%M %p" }} ({{ page.timezone | replace: "US/", ""}})</p>
+        <p>
+            {{ page.event_start_time | date: "%m/%d/%Y (%A) starting at %-I:%M %p" }} ({{ page.timezone | replace: "US/", "" }}).
+        </p>
         <h2>Location</h2>
-        <p><b>Location Name</b>: {{ page.location_name }}</p>
         {% if page.location_address and page.location_address.size > 2 %}
-        <p><b>Address</b>: <a href="http://maps.apple.com/?near={{ page.location_gps_coordinates_lat }},{{ page.location_gps_coordinates_lon }}&q={{ page.location_name | replace: " ", "+"}}+{{ page.location_address }}">{{ page.location_address }}</a></p>
-        <div id="map" class="event-page-map" data-lat="{{ page.location_gps_coordinates_lat }}" data-lng="{{ page.location_gps_coordinates_lon }}"></div>
+            <p>
+                <b>Address</b>: <a href="{{ page.location_map_link }}">{{ page.location_address }}</a>
+            </p>
+            <div id="map"
+                 class="event-page-map"
+                 data-lat="{{ page.location_gps_coordinates_lat }}"
+                 data-lng="{{ page.location_gps_coordinates_lon }}"></div>
         {% endif %}
         <h2>Miscellaneous</h2>
         {% if page.event_last_updated  and page.event_last_updated.size > 2 %}
-        <p><b>Event Info Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y %-I:%M %p" }}</p>
+            <p>
+                <!-- <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y %-I:%M %p" }} -->
+                <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y" }}
+            </p>
         {% endif %}
-        <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p>
-        {% if page.video_call_url and page.video_call_url.size > 2 %}
-        <p><b>Video Call Link</b>: <a href="{{ page.video_call_url }}">Join Video Call</a></p>
-        {% endif %}
+        <!-- <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p> -->
     </div>
 </div>

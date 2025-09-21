@@ -1,0 +1,19 @@
+<div class="event-list-item">
+    <div class="event-list-item-date">
+        <p>{{ include.event.event_start_time | date: site.events_date_format }}</p>
+    </div>
+    <div class="event-list-item-inner">
+        <div class="event-list-item-inner-info">
+            <h3>
+                <a href="{{ include.event.url | relative_url }}">{{ include.event.event_name }}</a>
+            </h3>
+            <p>Starting at {{ include.event.event_start_time | date: site.events_time_format }}</p>
+            {% if include.event.location_address %}
+                <p>
+                    At <a href="{{ include.event.location_map_link }}">{{ include.event.location_address_name }}</a>
+                </p>
+            {% endif %}
+            <p>{{ include.event.event_details | strip_html | truncatewords: 50 }}</p>
+        </div>
+    </div>
+</div>

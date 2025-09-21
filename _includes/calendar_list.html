@@ -2,71 +2,34 @@
 {% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
 {% assign sorted_past_events = "" | split: "" %}
 {% assign sorted_upcoming_events = "" | split: "" %}
-
 {% for event in sorted_events %}
-  {% assign event_unix_time = event.event_start_time | date: '%s' | plus: 0 %}
-  {% if event_unix_time < current_unix_time %}
-    {% assign sorted_past_events = sorted_past_events | push: event %}
-  {% else %}
-    {% assign sorted_upcoming_events = sorted_upcoming_events | push: event %}
-  {% endif %}
+    {% assign event_unix_time = event.event_start_time | date: '%s' | plus: 0 %}
+    {% if event_unix_time < current_unix_time %}
+        {% assign sorted_past_events = sorted_past_events | push: event %}
+    {% else %}
+        {% assign sorted_upcoming_events = sorted_upcoming_events | push: event %}
+    {% endif %}
 {% endfor %}
 {% assign sorted_past_events = sorted_past_events | reverse %}
 {% assign sorted_upcoming_events = sorted_upcoming_events | sort: 'event_start_time' %}
-
-
 {% if include.type_to_show == "upcoming" %}
     {% if sorted_upcoming_events.size > 0 %}
-    <h2>Upcoming Events</h2>
-    <div class="event-list-container">
-    {% for event in sorted_upcoming_events limit:include.limit %}
-        <div class="event-list-item">
-            <div class="event-list-item-date">
-                <p>{{ event.event_start_time | date: site.events_date_format }}</p>
-            </div>
-            <div class="event-list-item-inner">
-                <div class="event-list-item-inner-info">
-                    <h3>{{ event.event_name }}</h3>
-                    <p>{{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }}</p>
-                    <p>At <a href="http://maps.apple.com/?near={{ event.location_coordinates[0] }},{{ event.location_coordinates[1] }}&q={{ event.location_name | replace: " ", "+"}}+{{ event.location_address | replace: " ", "+" }}">{{ event.location_name }}</a></p>
-                    <p>{{ event.event_description }}</p>
-                </div>
-                <div class="event-list-item-inner-links">
-                    <a href="{{ event.url | relative_url }}">Event Details</a>
-                </div>
-            </div>
+        <h2>Upcoming Events</h2>
+        <div class="event-list-container">
+            {% for event in sorted_upcoming_events limit:include.limit %}
+                {% include event_item.html event=event %}
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
     {% endif %}
 {% endif %}
 {% if include.type_to_show == "past" %}
     {% if sorted_past_events.size > 0 %}
-    <h2>Past Events</h2>
-    <div class="event-list-container">
-    {% for event in sorted_past_events limit:include.limit %}
-        <div class="event-list-item">
-            <div class="event-list-item-date">
-                <p>{{ event.event_start_time | date: site.events_date_format }}</p>
-            </div>
-            <div class="event-list-item-inner">
-                <div class="event-list-item-inner-info">
-                    <h3>{{ event.event_name }}</h3>
-                    <p>{{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }}</p>
-                    <p>At <a href="http://maps.apple.com/?near={{ event.location_coordinates[0] }},{{ event.location_coordinates[1] }}&q={{ event.location_name | replace: " ", "+"}}+{{ event.location_address | replace: " ", "+" }}">{{ event.location_name }}</a></p>
-                    <p>{{ event.event_description }}</p>
-                </div>
-                <div class="event-list-item-inner-links">
-                    <a href="{{ event.url | relative_url }}">Event Details</a>
-                </div>
-            </div>
-            <!-- <div class="event-list-item-datetime">
-                <a class="event-list-item-link" href="{{ event.video_call_url }}" target="_blank" rel="noopener noreferrer">Video Call Link</a>
-                <p class="event-list-item-duration">{{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }} ({{ site.timezone | replace: "US/", "" }})</p>
-                <p><a class="event-list-item-calendar-link" href="{{ event.calendar_link }}" target="_blank" rel="noopener noreferrer">Add to Calendar</a></p>
-            </div> -->
+        <h2>Past Events</h2>
+        <div class="event-list-container">
+            {% for event in sorted_past_events limit:include.limit %}
+                {% include event_item.html event=event %}
+            {% endfor %}
         </div>
-    {% endfor %}
-    </div>
     {% endif %}
 {% endif %}
+

@@ -2,49 +2,49 @@
 {% assign current_unix_time = site.time | date: '%s' | plus: 0 %}
 {% assign filtered_events = "" | split: "" %}
 {% for event in sorted_events %}
-  {% if event.event_start_time and event.event_start_time != "" %}
-    {% assign event_year = event.event_start_time | date: '%Y' %}
-    {% assign event_month = event.event_start_time | date: '%m' %}
-    {% if include.year and include.month %}
-      {% if event_year == include.year and event_month == include.month %}
-        {% assign filtered_events = filtered_events | push: event %}
-      {% endif %}
-    {% elsif include.year %}
-      {% if event_year == include.year %}
-        {% assign filtered_events = filtered_events | push: event %}
-      {% endif %}
-    {% else %}
-      {% assign filtered_events = filtered_events | push: event %}
+    {% if event.event_start_time and event.event_start_time != "" %}
+        {% assign event_year = event.event_start_time | date: '%Y' %}
+        {% assign event_month = event.event_start_time | date: '%m' %}
+        {% if include.year and include.month %}
+            {% if event_year == include.year and event_month == include.month %}
+                {% assign filtered_events = filtered_events | push: event %}
+            {% endif %}
+            {% elsif include.year %}
+            {% if event_year == include.year %}
+                {% assign filtered_events = filtered_events | push: event %}
+            {% endif %}
+        {% else %}
+            {% assign filtered_events = filtered_events | push: event %}
+        {% endif %}
     {% endif %}
-  {% endif %}
 {% endfor %}
-
 <div class="events-list-container">
-  {% for event in filtered_events limit:include.limit %}
-  <div class="events-list-item">
-    <div class="event-list-item-date">
-      <p>{{ event.event_start_time | date: site.events_date_format }}</p>
-    </div>
-    <div class="event-list-item-inner">
-      <div class="event-list-item-inner-info">
-        <h3>{{ event.event_name }}</h3>
-        <div style="display: flex; flex-wrap: wrap">
-          <p>
-            <strong>Date:</strong> {{ event.event_start_time | date: site.events_date_format }}
-          </p>
-          {% if event.location_name %}
-          <p style="margin-left: 1rem">
-            <strong>Location:</strong> {{ event.location_name }}
-          </p>
-          {% endif %}
+    {% for event in filtered_events limit:include.limit %}
+        <div class="events-list-item">
+            <div class="event-list-item-date">
+                <p>{{ event.event_start_time | date: site.events_date_format }}</p>
+            </div>
+            <div class="event-list-item-inner">
+                <div class="event-list-item-inner-info">
+                    <h3>{{ event.event_name }}</h3>
+                    <div style="display: flex; flex-wrap: wrap">
+                        <p>
+                            <strong>Date:</strong> {{ event.event_start_time | date: site.events_date_format }}
+                        </p>
+                        {% if event.location_name %}
+                            <p style="margin-left: 1rem">
+                                <strong>Location:</strong> {{ event.location_name }}
+                            </p>
+                        {% endif %}
+                    </div>
+                    <!-- print event description -->
+                    <p>{{ event.event_details | strip_html | truncatewords: 50 }}</p>
+                </div>
+                <div class="event-list-item-inner-links">
+                    <a href="{{ event.url | relative_url }}">View Details</a>
+                </div>
+            </div>
         </div>
-        <!-- print event description -->
-        <p>{{ event.event_description | strip_html | truncatewords: 24 }}</p>
-      </div>
-      <div class="event-list-item-inner-links">
-        <a href="{{ event.url | relative_url }}">View Details</a>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+    {% endfor %}
 </div>
+

@@ -1,3 +1,4 @@
+future: true
 permalink: /:slug
 theme_config:
   appearance: auto

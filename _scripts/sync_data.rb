@@ -48,20 +48,32 @@ begin
       /^_|_$/, ''
     )
     filename = "_events/#{event_start_time_localized.strftime('%Y-%m-%d')}-#{sanitized_event_name}.md"
+    location_address_str = escape_html_for_yaml(event['location_address'])
+    # location_address_name_str = location_address_str.split(',').map(&:strip)[0...-4].join(', ').gsub('"', '')
+    location_address_array = location_address_str.split(',').map(&:strip)
+    if location_address_array.length == 4
+      location_address_name_str = location_address_array[0...-3].join(', ').gsub('"', '')
+    elsif location_address_array.length > 4
+      location_address_name_str = location_address_array[0...-4].join(', ').gsub('"', '')
+    end
+    location_address_nospace_str = location_address_str.gsub('"', '').gsub(' ', '+')
+    location_map_link_str = "http://maps.apple.com/?near=#{event['location_coordinates'][0]},#{event['location_coordinates'][1]}&q=#{location_address_nospace_str}"
     File.open(filename, 'w') do |file|
       file.puts '---'
       file.puts 'layout: event'
       file.puts "title: #{escape_html_for_yaml(event['event_name'])}"
       file.puts "event_name: #{escape_html_for_yaml(event['event_name'])}"
-      file.puts "event_description: #{escape_html_for_yaml(event['event_description'])}"
+      # file.puts "event_description: #{escape_html_for_yaml(event['event_description'])}"
       file.puts "event_details: #{escape_html_for_yaml(event['event_details'])}"
       file.puts "event_start_time: #{event['event_start_time']}"
       file.puts "event_end_time: #{event['event_end_time']}"
-      file.puts "video_call_url: #{escape_html_for_yaml(event['video_call_url'])}"
+      # file.puts "video_call_url: #{escape_html_for_yaml(event['video_call_url'])}"
       file.puts "timezone: #{escape_html_for_yaml(event['timezone'])}"
       file.puts "calendar_link: #{escape_html_for_yaml(event['calendar_link'])}"
-      file.puts "location_name: #{escape_html_for_yaml(event['location_name'])}"
+      # file.puts "location_name: #{escape_html_for_yaml(event['location_name'])}"
       file.puts "location_address: #{escape_html_for_yaml(event['location_address'])}"
+      file.puts "location_address_name: #{location_address_name_str}"
+      file.puts "location_map_link: #{location_map_link_str}"
       file.puts "location_gps_coordinates_lat: #{event['location_coordinates'][0]}"
       file.puts "location_gps_coordinates_lon: #{event['location_coordinates'][1]}"
       file.puts "event_last_updated: #{event['event_last_updated']}"
