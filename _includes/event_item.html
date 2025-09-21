@@ -4,7 +4,9 @@
     </div>
     <div class="event-list-item-inner">
         <div class="event-list-item-inner-info">
-            <h3>{{ include.event.event_name }}</h3>
+            <h3>
+                <a href="{{ include.event.url | relative_url }}">{{ include.event.event_name }}</a>
+            </h3>
             <p>
                 {{ include.event.event_start_time | date: site.events_time_format }} to {{ include.event.event_end_time | date: site.events_time_format }}
             </p>
@@ -15,8 +17,6 @@
             {% endif %}
             <p>{{ include.event.event_details | strip_html | truncatewords: 50 }}</p>
         </div>
-        <div class="event-list-item-inner-links">
-            <a href="{{ include.event.url | relative_url }}">Event Details</a>
-        </div>
     </div>
 </div>
+
