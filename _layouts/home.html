@@ -3,134 +3,127 @@ layout: default
 ---
 
 <div class="homepage_logo">
-  <img
-    id="homepage_kofc_logo"
-    alt="The Knights of Columbus logo"
-    src="/assets/svg/koc_crest.svg"
-  />
+    <img id="homepage_kofc_logo"
+         alt="The Knights of Columbus logo"
+         src="/assets/svg/koc_crest.svg" />
 </div>
-<h1 id="homepage_title_text">
-  {{ site.data.all_council_info_data.council_info.council_name }} Council
-</h1>
+<h1 id="homepage_title_text">{{ site.data.all_council_info_data.council_info.council_name }} Council</h1>
 <div style="margin: 0 auto">
-  <p class="homepage-tagline">
-    "{{
-    site.data.all_council_info_data.council_website_settings.homepage_tagline
-    }}"
-  </p>
-  <p style="text-align: center; max-width: 34rem; margin: 0 auto">
-    {{
-    site.data.all_council_info_data.council_website_settings.homepage_description
-    }}
-  </p>
-</div>
-
-{% if site.homepage.parishes.show_section %} {% include calendar_list.html
-type_to_show="upcoming" limit=3 %} {% endif %} {% if
-site.homepage.announcements.show_latest %}
-<h2>Latest Announcement</h2>
-{% assign latest_announcement = site.announcements | sort: 'sent_at' | reverse |
-first %} {% if latest_announcement %}
-<div class="latest-announcement">
-  <div class="announcement-content">
-    <p class="announcement-date">
-      <strong>Sent: </strong>{{ latest_announcement.sent_at | date:
-      site.events_date_format }}
+    <p class="homepage-tagline">
+        "{{
+        site.data.all_council_info_data.council_website_settings.homepage_tagline
+        }}"
     </p>
-    <br />
-    {% if latest_announcement.sms_body %}
-    <p>{{ latest_announcement.sms_body }}</p>
-    {% else %} {{ latest_announcement.email_body }} {% endif %}
-    <br />
-    <div class="announcement-links">
-      <a
-        href="{{ latest_announcement.url | relative_url }}"
-        class="view-full-announcement"
-        >View Full Announcement</a
-      >
-    </div>
-  </div>
+    <p style="text-align: center; max-width: 34rem; margin: 0 auto">
+        {{
+        site.data.all_council_info_data.council_website_settings.homepage_description
+        }}
+    </p>
 </div>
-{% endif %} {% endif %} {% if site.homepage.announcements.show_recent_list %}
-<h2>Recent Announcements</h2>
-{% include announcements_list.html
-limit=site.homepage.announcements.number_of_recent_to_show %} {% endif %}
-
-<h2>Latest Posts</h2>
-{% include post_list.html type_to_show="upcoming" limit=2 %} {% if
-site.homepage.parishes.show_section %} {% if
-site.data.all_council_info_data.council_parishes.size == 1 %}
-<h2>Our Parish</h2>
-{% else %}
-<h2>Our Parishes</h2>
-{% endif %} {% if site.homepage.parishes.show_sentence %} {% if
-site.data.all_council_info_data.council_parishes.size == 1 %}
-<p>
-  Our council serves the parish of
-  <a
-    href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}"
-    >{{ site.data.all_council_info_data.council_parishes[0].parish_name }}</a
-  >.
-</p>
-{% else %}
-<p>
-  Our council serves the parishes of: {% for parish in
-  site.data.all_council_info_data.council_parishes %} {% if forloop.last %} and
-  <a
-    href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}"
-    >{{ parish.parish_name }}</a
-  >. {% else %}
-  <a
-    href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}"
-    >{{ parish.parish_name }}</a
-  >, {% endif %} {% endfor %} {% endif %} {% endif %}
-</p>
-
-<div class="homepage_parish_info">
-  {% if site.homepage.parishes.show_parish_map %} {% if
-  site.homepage.parishes.parish_map_type == "interactive" %}
-  <div id="map" class="homepage-map"></div>
-  {% elsif site.homepage.parishes.parish_map_type == "static" %}
-  <div class="homepage-map">
-    <picture>
-      <source
-        srcset="{{ site.homepage.parishes.static_map_url.avif }}"
-        type="image/avif"
-      />
-      <img
-        src="{{ site.homepage.parishes.static_map_url.jpg }}"
-        alt="Map of parish locations"
-        class="static-map-image"
-      />
-    </picture>
-  </div>
-  {% endif %} {% endif %} {% if site.homepage.parishes.show_parish_list %}
-  <div class="homepage-parish-locations">
-    {% for parish in site.data.all_council_info_data.council_parishes %}
-    <div class="homepage-parish-location cyberknight_box">
-      <div class="homepage-parish-location-inner">
-        <h3>{{ parish.parish_name }}</h3>
-        <p>{{ parish.parish_address | replace: ", USA", "" }}</p>
-        <div class="homepage-parish-location-inner-links">
-          <a
-            class="cyberknight_link box_bottom_link"
-            href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}"
-            >Get Directions</a
-          >
-          {% if site.homepage.parishes.parish_map_type == "interactive" %}
-          <button
-            class="center-on-map-link cyberknight_link box_bottom_link"
-            data-lat="{{ parish.gps_coordinates[0] }}"
-            data-lng="{{ parish.gps_coordinates[1] }}"
-          >
-            Center on Map
-          </button>
-          {% endif %}
+{% if site.homepage.announcements.show_latest %}
+    <h2>Latest Announcement</h2>
+    {% assign latest_announcement = site.announcements | sort: 'sent_at' | reverse |
+    first %}
+    {% if latest_announcement %}
+        <div class="latest-announcement">
+            <div class="announcement-content">
+                <p class="announcement-date">
+                    <strong>Sent:</strong> {{ latest_announcement.sent_at | date:
+                    site.events_date_format }}
+                </p>
+                <br />
+                {% if latest_announcement.sms_body %}
+                    <p>{{ latest_announcement.sms_body }}</p>
+                {% else %}
+                    {{ latest_announcement.email_body }}
+                {% endif %}
+                <br />
+                <div class="announcement-links">
+                    <a href="{{ latest_announcement.url | relative_url }}"
+                       class="view-full-announcement">View Full Announcement</a>
+                </div>
+            </div>
         </div>
-      </div>
+    {% endif %}
+{% endif %}
+{% if site.homepage.parishes.show_section %}
+    {% include calendar_list.html
+    type_to_show="upcoming" limit=3 %}
+{% endif %}
+{% if site.homepage.announcements.show_recent_list %}
+    <h2>Recent Announcements</h2>
+    {% include announcements_list.html
+    limit=site.homepage.announcements.number_of_recent_to_show %}
+{% endif %}
+<h2>Latest Posts</h2>
+{% include post_list.html type_to_show="upcoming" limit=2 %}
+{% if
+    site.homepage.parishes.show_section %}
+    {% if
+        site.data.all_council_info_data.council_parishes.size == 1 %}
+        <h2>Our Parish</h2>
+    {% else %}
+        <h2>Our Parishes</h2>
+    {% endif %}
+    {% if site.homepage.parishes.show_sentence %}
+        {% if
+            site.data.all_council_info_data.council_parishes.size == 1 %}
+            <p>
+                Our council serves the parish of
+                <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">{{ site.data.all_council_info_data.council_parishes[0].parish_name }}</a>.
+            </p>
+        {% else %}
+            <p>
+                Our council serves the parishes of:
+                {% for parish in
+                    site.data.all_council_info_data.council_parishes %}
+                    {% if forloop.last %}
+                        and
+                        <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">{{ parish.parish_name }}</a>.
+                    {% else %}
+                        <a href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">{{ parish.parish_name }}</a>,
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+    </p>
+    <div class="homepage_parish_info">
+        {% if site.homepage.parishes.show_parish_map %}
+            {% if
+                site.homepage.parishes.parish_map_type == "interactive" %}
+                <div id="map" class="homepage-map"></div>
+                {% elsif site.homepage.parishes.parish_map_type == "static" %}
+                <div class="homepage-map">
+                    <picture>
+                        <source srcset="{{ site.homepage.parishes.static_map_url.avif }}"
+                                type="image/avif" />
+                        <img src="{{ site.homepage.parishes.static_map_url.jpg }}"
+                             alt="Map of parish locations"
+                             class="static-map-image" />
+                    </picture>
+                </div>
+            {% endif %}
+        {% endif %}
+        {% if site.homepage.parishes.show_parish_list %}
+            <div class="homepage-parish-locations">
+                {% for parish in site.data.all_council_info_data.council_parishes %}
+                    <div class="homepage-parish-location cyberknight_box">
+                        <div class="homepage-parish-location-inner">
+                            <h3>{{ parish.parish_name }}</h3>
+                            <p>{{ parish.parish_address | replace: ", USA", "" }}</p>
+                            <div class="homepage-parish-location-inner-links">
+                                <a class="cyberknight_link box_bottom_link"
+                                   href="http://maps.apple.com/?near={{ parish.gps_coordinates[0] }},{{ parish.gps_coordinates[1] }}&q={{ parish.parish_name }}+{{ parish.parish_address }}">Get Directions</a>
+                                {% if site.homepage.parishes.parish_map_type == "interactive" %}
+                                    <button class="center-on-map-link cyberknight_link box_bottom_link"
+                                            data-lat="{{ parish.gps_coordinates[0] }}"
+                                            data-lng="{{ parish.gps_coordinates[1] }}">Center on Map</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
-    {% endfor %}
-  </div>
-  {% endif %}
-</div>
 {% endif %}
