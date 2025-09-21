@@ -17,28 +17,7 @@
         <h2>Upcoming Events</h2>
         <div class="event-list-container">
             {% for event in sorted_upcoming_events limit:include.limit %}
-                <div class="event-list-item">
-                    <div class="event-list-item-date">
-                        <p>{{ event.event_start_time | date: site.events_date_format }}</p>
-                    </div>
-                    <div class="event-list-item-inner">
-                        <div class="event-list-item-inner-info">
-                            <h3>{{ event.event_name }}</h3>
-                            <p>
-                                {{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }}
-                            </p>
-                            {% if event.location_address %}
-                                <p>
-                                    At <a href="{{ event.location_map_link }}">{{ event.location_address_name }}</a>
-                                </p>
-                            {% endif %}
-                            <p>{{ event.event_details | strip_html | truncatewords: 50 }}</p>
-                        </div>
-                        <div class="event-list-item-inner-links">
-                            <a href="{{ event.url | relative_url }}">Event Details</a>
-                        </div>
-                    </div>
-                </div>
+                {% include event_item.html event=event %}
             {% endfor %}
         </div>
     {% endif %}
@@ -48,33 +27,7 @@
         <h2>Past Events</h2>
         <div class="event-list-container">
             {% for event in sorted_past_events limit:include.limit %}
-                <div class="event-list-item">
-                    <div class="event-list-item-date">
-                        <p>{{ event.event_start_time | date: site.events_date_format }}</p>
-                    </div>
-                    <div class="event-list-item-inner">
-                        <div class="event-list-item-inner-info">
-                            <h3>{{ event.event_name }}</h3>
-                            <p>
-                                {{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }}
-                            </p>
-                            {% if event.location_address %}
-                                <p>
-                                    At <a href="{{ event.location_map_link }}">{{ event.location_address_name }}</a>
-                                </p>
-                            {% endif %}
-                            <p>{{ event.event_details | strip_html | truncatewords: 50 }}</p>
-                        </div>
-                        <div class="event-list-item-inner-links">
-                            <a href="{{ event.url | relative_url }}">Event Details</a>
-                        </div>
-                    </div>
-                    <!-- <div class="event-list-item-datetime">
-                <a class="event-list-item-link" href="{{ event.video_call_url }}" target="_blank" rel="noopener noreferrer">Video Call Link</a>
-                <p class="event-list-item-duration">{{ event.event_start_time | date: site.events_time_format }} to {{ event.event_end_time | date: site.events_time_format }} ({{ site.timezone | replace: "US/", "" }})</p>
-                <p><a class="event-list-item-calendar-link" href="{{ event.calendar_link }}" target="_blank" rel="noopener noreferrer">Add to Calendar</a></p>
-            </div> -->
-                </div>
+                {% include event_item.html event=event %}
             {% endfor %}
         </div>
     {% endif %}
