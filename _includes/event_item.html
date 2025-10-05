@@ -1,13 +1,34 @@
 <div class="event-list-item">
+    {% if include.event.event_start_time_formatted %}
+        {% assign event_date_time_parts = include.event.event_start_time_formatted | split: ' starting at ' %}
+        {% assign event_date_text = event_date_time_parts[0] %}
+        {% assign event_time_text = event_date_time_parts[1] %}
+    {% endif %}
     <div class="event-list-item-date">
-        <p>{{ include.event.event_start_time | date: site.events_date_format }}</p>
+        <p>
+            {% if event_date_text %}
+                {{ event_date_text }}
+            {% else %}
+                {{ include.event.event_start_time | date: site.events_date_format }}
+            {% endif %}
+        </p>
     </div>
     <div class="event-list-item-inner">
         <div class="event-list-item-inner-info">
             <h3>
                 <a href="{{ include.event.url | relative_url }}">{{ include.event.event_name }}</a>
             </h3>
-            <p>Starting at {{ include.event.event_start_time | date: site.events_time_format }}</p>
+            <p>
+                Starting at
+                {% if event_time_text %}
+                    {{ event_time_text }}
+                {% else %}
+                    {{ include.event.event_start_time | date: site.events_time_format }}
+                {% endif %}
+                {% if include.event.timezone %}
+                    ({{ include.event.timezone | replace: "US/", "" }})
+                {% endif %}
+            </p>
             {% if include.event.location_address %}
                 <p>
                     At <a href="{{ include.event.location_map_link }}">{{ include.event.location_address_name }}</a>
