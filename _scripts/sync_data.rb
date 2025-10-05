@@ -77,6 +77,22 @@ begin
       file.puts "location_gps_coordinates_lat: #{event['location_coordinates'][0]}"
       file.puts "location_gps_coordinates_lon: #{event['location_coordinates'][1]}"
       file.puts "event_last_updated: #{event['event_last_updated']}"
+
+      if event['event_images'] && !event['event_images'].empty?
+        sorted_images = event['event_images'].sort_by { |img| img['order'] }
+        file.puts 'event_images:'
+        sorted_images.each do |image|
+          file.puts "  - image_id: \"#{image['image_id']}\""
+          file.puts "    caption: #{escape_html_for_yaml(image['caption'])}"
+          alt_text_fixed = image['alt_text'].nil? ? '""' : "\"#{image['alt_text'].gsub('"', "'" )}\""
+          file.puts "    alt_text: #{alt_text_fixed}"
+          file.puts "    order: #{image['order']}"
+          file.puts "    uploaded_at: #{image['uploaded_at']}"
+          file.puts "    thumbnail_url: \"#{image['thumbnail_url']}\""
+          file.puts "    original_url: \"#{image['original_url']}\""
+        end
+      end
+
       file.puts '---'
     end
   end

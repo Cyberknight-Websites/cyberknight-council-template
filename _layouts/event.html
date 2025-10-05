@@ -23,13 +23,38 @@ layout: default
                  data-lat="{{ page.location_gps_coordinates_lat }}"
                  data-lng="{{ page.location_gps_coordinates_lon }}"></div>
         {% endif %}
-        <h2>Miscellaneous</h2>
-        {% if page.event_last_updated  and page.event_last_updated.size > 2 %}
-            <p>
-                <!-- <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y %-I:%M %p" }} -->
-                <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y" }}
-            </p>
-        {% endif %}
-        <!-- <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p> -->
-    </div>
+         <h2>Miscellaneous</h2>
+         {% if page.event_last_updated  and page.event_last_updated.size > 2 %}
+             <p>
+                 <!-- <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y %-I:%M %p" }} -->
+                 <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y" }}
+             </p>
+         {% endif %}
+         <!-- <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p> -->
+
+         {% if page.event_images and page.event_images.size > 0 %}
+         <div class="post-gallery">
+             <h2>Gallery</h2>
+             <div class="post-gallery-grid">
+                 {% for image in page.event_images %}
+                 <div class="post-gallery-item">
+                     <picture>
+                         <img class="post-gallery-thumbnail announcement-img-lightbox"
+                              src="{{ image.thumbnail_url }}"
+                              alt="{{ image.alt_text }}"
+                              {% if forloop.index > 3 %}loading="lazy"{% endif %}
+                              data-full-image="{{ image.original_url }}"
+                              data-image-order="{{ image.order }}"
+                              style="height: 10rem; width: auto; object-fit: cover;"/>
+                     </picture>
+                     {% if image.caption and image.caption != "" %}
+                     <p class="post-gallery-caption">{{ image.caption }}</p>
+                     {% endif %}
+                 </div>
+                 {% endfor %}
+             </div>
+         </div>
+         {% endif %}
+     </div>
 </div>
+
