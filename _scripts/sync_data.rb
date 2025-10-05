@@ -2,6 +2,7 @@ require 'open-uri'
 require 'json'
 require 'optparse'
 require 'tzinfo'
+require 'time'
 
 begin
   options = {}
@@ -31,8 +32,10 @@ begin
 
   website_tz = 'US/Pacific'
   tz = TZInfo::Timezone.get(website_tz)
+  tz_cache = { website_tz => tz }
 
   def escape_html_for_yaml(content)
+
     return '""' if content.nil? || content.empty?
 
     escaped = content.gsub('"', '\\"') # Escape double quotes
@@ -43,7 +46,11 @@ begin
   # Delete existing event files
   Dir.glob('_events/*.md').each { |file| File.delete(file) }
   all_council_info_data['council_events'].each do |event|
-    event_start_time_localized = tz.to_local(Time.at(event['event_start_time']))
+    event_timezone = event['timezone'] || website_tz
+    tz_cache[event_timezone] ||= TZInfo::Timezone.get(event_timezone)
+    event_tz = tz_cache[event_timezone]
+
+    event_start_time_localized = event_tz.to_local(Time.at(event['event_start_time']))
     sanitized_event_name = event['event_name'].downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(
       /^_|_$/, ''
     )
@@ -66,6 +73,7 @@ begin
       # file.puts "event_description: #{escape_html_for_yaml(event['event_description'])}"
       file.puts "event_details: #{escape_html_for_yaml(event['event_details'])}"
       file.puts "event_start_time: #{event['event_start_time']}"
+      file.puts "event_start_time_formatted: \"#{event_start_time_localized.strftime('%m/%d/%Y (%A) starting at %-I:%M %p')}\""
       file.puts "event_end_time: #{event['event_end_time']}"
       # file.puts "video_call_url: #{escape_html_for_yaml(event['video_call_url'])}"
       file.puts "timezone: #{escape_html_for_yaml(event['timezone'])}"
