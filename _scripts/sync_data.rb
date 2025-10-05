@@ -35,7 +35,6 @@ begin
   tz_cache = { website_tz => tz }
 
   def escape_html_for_yaml(content)
-
     return '""' if content.nil? || content.empty?
 
     escaped = content.gsub('"', '\\"') # Escape double quotes
@@ -59,9 +58,9 @@ begin
     # location_address_name_str = location_address_str.split(',').map(&:strip)[0...-4].join(', ').gsub('"', '')
     location_address_array = location_address_str.split(',').map(&:strip)
     if location_address_array.length == 4
-      location_address_name_str = location_address_array[0...-3].join(', ').gsub('"', '')
+      location_address_name_str = location_address_array[0...-2].join(', ').gsub('"', '')
     elsif location_address_array.length > 4
-      location_address_name_str = location_address_array[0...-4].join(', ').gsub('"', '')
+      location_address_name_str = location_address_array[0...-3].join(', ').gsub('"', '')
     end
     location_address_nospace_str = location_address_str.gsub('"', '').gsub(' ', '+')
     location_map_link_str = "http://maps.apple.com/?near=#{event['location_coordinates'][0]},#{event['location_coordinates'][1]}&q=#{location_address_nospace_str}"
@@ -92,7 +91,7 @@ begin
         sorted_images.each do |image|
           file.puts "  - image_id: \"#{image['image_id']}\""
           file.puts "    caption: #{escape_html_for_yaml(image['caption'])}"
-          alt_text_fixed = image['alt_text'].nil? ? '""' : "\"#{image['alt_text'].gsub('"', "'" )}\""
+          alt_text_fixed = image['alt_text'].nil? ? '""' : "\"#{image['alt_text'].gsub('"', "'")}\""
           file.puts "    alt_text: #{alt_text_fixed}"
           file.puts "    order: #{image['order']}"
           file.puts "    uploaded_at: #{image['uploaded_at']}"

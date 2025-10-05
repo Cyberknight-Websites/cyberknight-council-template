@@ -28,13 +28,6 @@ layout: default
                  data-lat="{{ page.location_gps_coordinates_lat }}"
                  data-lng="{{ page.location_gps_coordinates_lon }}"></div>
         {% endif %}
-        <h2>Miscellaneous</h2>
-        {% if page.event_last_updated  and page.event_last_updated.size > 2 %}
-            <p>
-                <!-- <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y %-I:%M %p" }} -->
-                <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y" }}
-            </p>
-        {% endif %}
         <!-- <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p> -->
         {% if page.event_images and page.event_images.size > 0 %}
             <div class="post-gallery">
@@ -58,6 +51,13 @@ layout: default
                     {% endfor %}
                 </div>
             </div>
+        {% endif %}
+        <h2>Miscellaneous</h2>
+        {% if page.event_last_updated  and page.event_last_updated.size > 2 %}
+            <p>
+                <!-- <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y %-I:%M %p" }} -->
+                <b>Event Last Updated</b>: {{ page.event_last_updated | date: "%m/%d/%Y" }}
+            </p>
         {% endif %}
     </div>
 </div>
