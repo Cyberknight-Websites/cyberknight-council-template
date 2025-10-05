@@ -11,7 +11,12 @@ layout: default
         {% endif %}
         <h2>Date/Time</h2>
         <p>
-            {{ page.event_start_time | date: "%m/%d/%Y (%A) starting at %-I:%M %p" }} ({{ page.timezone | replace: "US/", "" }}).
+            {% if page.event_start_time_formatted %}
+                {{ page.event_start_time_formatted }}
+            {% else %}
+                {{ page.event_start_time | date: "%m/%d/%Y (%A) starting at %-I:%M %p" }}
+            {% endif %}
+            ({{ page.timezone | replace: "US/", "" }}).
         </p>
         <h2>Location</h2>
         {% if page.location_address and page.location_address.size > 2 %}
