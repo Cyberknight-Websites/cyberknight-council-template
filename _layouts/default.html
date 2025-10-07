@@ -35,11 +35,9 @@
         <meta property="og:locale" content="en_US">
         <meta property="og:url" content="{{ page.url }}">
         <meta property="og:site_name" content="{{ site.title }}">
-        {% if page.event_flyer and page.event_flyer.thumbnail_url %}
-            <meta property="og:image"
-                  content="{{ page.event_flyer.thumbnail_url }}">
-            <meta name="twitter:image"
-                  content="{{ page.event_flyer.thumbnail_url }}">
+        {% if page.event_flyer and page.event_flyer.original_url %}
+            <meta property="og:image" content="{{ page.event_flyer.original_url }}">
+            <meta name="twitter:image" content="{{ page.event_flyer.original_url }}">
         {% else %}
             <meta property="og:image"
                   content="{{ site.data.all_council_info_data.council_info.council_opengraph_url }}">
