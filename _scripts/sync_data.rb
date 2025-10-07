@@ -85,6 +85,17 @@ begin
       file.puts "location_gps_coordinates_lon: #{event['location_coordinates'][1]}"
       file.puts "event_last_updated: #{event['event_last_updated']}"
 
+      if event['event_flyer'].is_a?(Hash) && !event['event_flyer'].empty?
+        flyer = event['event_flyer']
+        file.puts 'event_flyer:'
+        file.puts "  image_id: \"#{flyer['image_id']}\"" if flyer['image_id']
+        alt_text_fixed = flyer['alt_text'].nil? ? '""' : "\"#{flyer['alt_text'].gsub('"', "'")}\""
+        file.puts "  alt_text: #{alt_text_fixed}"
+        file.puts "  uploaded_at: #{flyer['uploaded_at']}" if flyer['uploaded_at']
+        file.puts "  thumbnail_url: \"#{flyer['thumbnail_url']}\"" if flyer['thumbnail_url']
+        file.puts "  original_url: \"#{flyer['original_url']}\"" if flyer['original_url']
+      end
+
       if event['event_images'] && !event['event_images'].empty?
         sorted_images = event['event_images'].sort_by { |img| img['order'] }
         file.puts 'event_images:'
