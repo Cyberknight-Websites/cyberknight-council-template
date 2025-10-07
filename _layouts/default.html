@@ -1,56 +1,75 @@
 <!DOCTYPE html>
-<html lang="{{ page.lang | default: "en" }}" class="html" data-theme="{{ site.theme_config.appearance | default: "auto" }}">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-    <title>
-      {% if page.title %}
-      {{ page.title }}
-      {% else %}
-      {{ site.title }}
-      {% endif %}
-    </title>
-  
-    <link rel="alternate" type="application/atom+xml" title="{{ site.name }}" href="{{site.url}}/feed.xml" />
-  
-    <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
-    {% if page.description %}
-    <meta name="description" content="{{ page.description }}">
-    <meta property="og:description" content="{{ page.description }}">
-    <meta name="twitter:description" content="{{ page.description }}">
-    {% else %}
-    <meta name="description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
-    <meta property="og:description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
-    <meta name="twitter:description" content="{{  site.data.all_council_info_data.council_website_settings.homepage_description }}">
-    {% endif %}
-    <link rel="canonical" href="{{site.url}}{{ page.url }}">
-    <meta property="og:title" content="{{ page.title }}">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:url" content="{{ page.url }}">
-    <meta property="og:site_name" content="{{ site.title }}">
-    <meta property="og:image"  content="{{  site.data.all_council_info_data.council_info.council_opengraph_url }}">
-    <meta name="twitter:image" content="{{  site.data.all_council_info_data.council_info.council_opengraph_url }}">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="{{ page.url }}">
-    <meta name="twitter:title" content="{{ page.title }}">
-  
-    <!-- Favicon -->
-    <link  rel="apple-touch-icon"  sizes="180x180"  href="{{ site.url }}/assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ site.url }}/assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ site.url }}/assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="{{ site.url }}/assets/favicon/site.webmanifest">
-    
-    <!-- theme-color -->
-    <meta name="theme-color" content="#000000">
-  
-    <!-- Google site verification -->
-    <meta name="google-site-verification" content="VsNyvMxYvOQFM1OyN-DUCMvUDGYbj3xb6ZmPBbkNLYo" />
-  
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}" />
-    <script>
+<html lang="{{ page.lang | default: "en" }}"
+      class="html"
+      data-theme="{{ site.theme_config.appearance | default: "auto" }}">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+            {% if page.title %}
+                {{ page.title }}
+            {% else %}
+                {{ site.title }}
+            {% endif %}
+        </title>
+        <link rel="alternate"
+              type="application/atom+xml"
+              title="{{ site.name }}"
+              href="{{ site.url }}/feed.xml" />
+        <meta name="generator" content="Jekyll v{{ jekyll.version }}" />
+        {% if page.description %}
+            <meta name="description" content="{{ page.description }}">
+            <meta property="og:description" content="{{ page.description }}">
+            <meta name="twitter:description" content="{{ page.description }}">
+        {% else %}
+            <meta name="description"
+                  content="{{ site.data.all_council_info_data.council_website_settings.homepage_description }}">
+            <meta property="og:description"
+                  content="{{ site.data.all_council_info_data.council_website_settings.homepage_description }}">
+            <meta name="twitter:description"
+                  content="{{ site.data.all_council_info_data.council_website_settings.homepage_description }}">
+        {% endif %}
+        <link rel="canonical" href="{{ site.url }}{{ page.url }}">
+        <meta property="og:title" content="{{ page.title }}">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:url" content="{{ page.url }}">
+        <meta property="og:site_name" content="{{ site.title }}">
+        {% if page.event_flyer and page.event_flyer.thumbnail_url %}
+            <meta property="og:image"
+                  content="{{ page.event_flyer.thumbnail_url }}">
+            <meta name="twitter:image"
+                  content="{{ page.event_flyer.thumbnail_url }}">
+        {% else %}
+            <meta property="og:image"
+                  content="{{ site.data.all_council_info_data.council_info.council_opengraph_url }}">
+            <meta name="twitter:image"
+                  content="{{ site.data.all_council_info_data.council_info.council_opengraph_url }}">
+        {% endif %}
+        <meta property="twitter:url" content="{{ page.url }}">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ page.title }}">
+        <!-- Favicon -->
+        <link rel="apple-touch-icon"
+              sizes="180x180"
+              href="{{ site.url }}/assets/favicon/apple-touch-icon.png">
+        <link rel="icon"
+              type="image/png"
+              sizes="32x32"
+              href="{{ site.url }}/assets/favicon/favicon-32x32.png">
+        <link rel="icon"
+              type="image/png"
+              sizes="16x16"
+              href="{{ site.url }}/assets/favicon/favicon-16x16.png">
+        <link rel="manifest" href="{{ site.url }}/assets/favicon/site.webmanifest">
+        <!-- theme-color -->
+        <meta name="theme-color" content="#000000">
+        <!-- Google site verification -->
+        <meta name="google-site-verification"
+              content="VsNyvMxYvOQFM1OyN-DUCMvUDGYbj3xb6ZmPBbkNLYo" />
+        <!-- CSS -->
+        <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}" />
+        <script>
       var parishData = {
         markerCoordinates: [
           {% for parish in site.data.all_council_info_data.council_parishes %}
@@ -85,103 +104,90 @@
       }
 
       document.addEventListener("DOMContentLoaded", onNavigateOrLoad);
-    </script>
-    <script src="{{ '/assets/js/leaflet.js' | relative_url }}"></script>
-    <script src="{{ '/assets/js/toggle_theme.js' | relative_url }}"></script>
-  </head>
-  <body>
-    <div id="background-divs">
-      <div id="background-color-layer"></div>
-      <div id="pan-logos-layer"></div>
-      <div id="pan-logo-gradient-overlay"></div>
-      {% if site.snow_effect.enabled %}
-        {% assign current_m_d = 'now' | date: '%m%d' | plus: 0 %}
-        {% assign start_m_d = site.snow_effect.start_date | date: '%m%d' | plus: 0 %}
-        {% assign end_m_d = site.snow_effect.end_date | date: '%m%d' | plus: 0 %}
-        {% if current_m_d >= start_m_d or current_m_d <= end_m_d %}
-          <script src="https://ddosnotification.github.io/snow-theme/snow.js"></script>
-        {% endif %}
-      {% endif %}
-    </div>
-    {% include image_dialog.html %}
-    <div class="topbar-container">
-      <div class="topbar">
-        <div class="topbar-top-row">
-          <div id="top-bar-kofc-logo">
-            <div id="top-bar-center">
-              {% if site.topbar.show_kofc_logo %}
-                <img src="/assets/svg/koc_crest.svg" alt="The Knights of Columbus logo">
-              {% endif %}
-              <div id="top-bar-text">
-                {% if site.topbar.use_custom_text %}
-                  <span>{{ site.topbar.custom_text }}</span>
-                {% else %}
-                  {% if site.topbar.show_knights_of_columbus_text %}
-                    <span>Knights of Columbus:</span>
-                  {% endif %}
-                  <span>
-                  {% if site.topbar.show_council_name %}
-                    {{ site.data.all_council_info_data.council_info.council_name }}
-                  {% endif %}
-                  Council
-                  {% if site.topbar.show_council_number %}
-                    #{{ site.data.all_council_info_data.council_info.council_number }}
-                  {% endif %}
+        </script>
+        <script src="{{ '/assets/js/leaflet.js' | relative_url }}"></script>
+        <script src="{{ '/assets/js/toggle_theme.js' | relative_url }}"></script>
+    </head>
+    <body>
+        <div id="background-divs">
+            <div id="background-color-layer"></div>
+            <div id="pan-logos-layer"></div>
+            <div id="pan-logo-gradient-overlay"></div>
+            {% if site.snow_effect.enabled %}
+                {% assign current_m_d = 'now' | date: '%m%d' | plus: 0 %}
+                {% assign start_m_d = site.snow_effect.start_date | date: '%m%d' | plus: 0 %}
+                {% assign end_m_d = site.snow_effect.end_date | date: '%m%d' | plus: 0 %}
+                {% if current_m_d >= start_m_d or current_m_d <= end_m_d %}
+                    <script src="https://ddosnotification.github.io/snow-theme/snow.js"></script>
                 {% endif %}
-                </span>
-              </div>
+            {% endif %}
+        </div>
+        {% include image_dialog.html %}
+        <div class="topbar-container">
+            <div class="topbar">
+                <div class="topbar-top-row">
+                    <div id="top-bar-kofc-logo">
+                        <div id="top-bar-center">
+                            {% if site.topbar.show_kofc_logo %}<img src="/assets/svg/koc_crest.svg" alt="The Knights of Columbus logo">{% endif %}
+                            <div id="top-bar-text">
+                                {% if site.topbar.use_custom_text %}
+                                    <span>{{ site.topbar.custom_text }}</span>
+                                {% else %}
+                                    {% if site.topbar.show_knights_of_columbus_text %}<span>Knights of Columbus:</span>{% endif %}
+                                    <span>
+                                        {% if site.topbar.show_council_name %}{{ site.data.all_council_info_data.council_info.council_name }}{% endif %}
+                                        Council
+                                        {% if site.topbar.show_council_number %}#{{ site.data.all_council_info_data.council_info.council_number }}{% endif %}
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <button menu-open id="topbar-menu" class="topbar-button topbar-button-right">
+                        <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/bars.svg"
+                             alt="Menu icon">
+                    </button>
+                </div>
+                <div class="topbar-bottom-row-container">
+                    <div class="topbar-bottom-row">
+                        {% for item in site.data.topbar-links %}
+                            <a class="topbar-mobile-links" href="{{ item.url }}">{{ item.title }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-          </div>
-          <button menu-open id="topbar-menu" class="topbar-button topbar-button-right">
-            <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/a1232e34553634c5363aa62c8d1b02161a4438e1/svgs/solid/bars.svg" alt="Menu icon">
-          </button>
         </div>
-        <div class="topbar-bottom-row-container">
-          <div class="topbar-bottom-row">
-            {% for item in site.data.topbar-links %}
-              <a class="topbar-mobile-links" href="{{ item.url }}">{{ item.title }}</a>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-    {% include topbar_JS.html %}
-    
-    <main class="page-content" aria-label="Content">
-      <div class="w">
-        <body>
-        {{ content }}
-        </body>
-        <div>
-          <div class="not-dashed" style="margin: 2rem auto 1rem;"></div>
-          <div class="credits">
-            <ul class="credit-links">
-              <li>
-                <p style="display: inline;">
-                  Theme
-                  &nbsp;|&nbsp;
-                  <div class="theme-selector" id="theme-selector-div">
-                    <select id="theme-dropdown" aria-label="Theme selection">
-                      <option value="system">System</option>
-                      <option value="light">Light</option>
-                      <option value="dark">Dark</option>
-                    </select>
-                    <span class="noselect" id="theme-selector-span">▼</span>
-                  </div>
-                </p>
-              <li>
-                Last updated on {{ site.time | date: "%B %d, %Y" }}
-              </li>
-              <li>
-                Contact us at&nbsp;<a href="mailto:{{site.data.all_council_info_data.council_info.council_public_email }}">{{site.data.all_council_info_data.council_info.council_public_email }}</a>
-              </li>
-              <li>
-                Made by&nbsp;<a href="https://www.cyberknight-websites.com/">Cyberknight Inc</a>
-              </li>
-            </ul>
-          <div>
-        </div>
-      </div>
-    </main>
-  </body>
-</html>
+        {% include topbar_JS.html %}
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+                <body>{{ content }}</body>
+                <div>
+                    <div class="not-dashed" style="margin: 2rem auto 1rem;"></div>
+                    <div class="credits">
+                        <ul class="credit-links">
+                            <li>
+                                <p style="display: inline;">
+                                    Theme
+                                    &nbsp;|&nbsp;
+                                    <div class="theme-selector" id="theme-selector-div">
+                                        <select id="theme-dropdown" aria-label="Theme selection">
+                                            <option value="system">System</option>
+                                            <option value="light">Light</option>
+                                            <option value="dark">Dark</option>
+                                        </select>
+                                        <span class="noselect" id="theme-selector-span">▼</span>
+                                    </div>
+                                </p>
+                                <li>Last updated on {{ site.time | date: "%B %d, %Y" }}</li>
+                                <li>
+                                    Contact us at&nbsp;<a href="mailto:{{ site.data.all_council_info_data.council_info.council_public_email }}">{{ site.data.all_council_info_data.council_info.council_public_email }}</a>
+                                </li>
+                                <li>
+                                    Made by&nbsp;<a href="https://www.cyberknight-websites.com/">Cyberknight Inc</a>
+                                </li>
+                            </ul>
+                            <div></div>
+                        </div>
+                    </main>
+                </body>
+            </html>
