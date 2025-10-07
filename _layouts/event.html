@@ -29,26 +29,18 @@ layout: default
                  data-lng="{{ page.location_gps_coordinates_lon }}"></div>
         {% endif %}
         <!-- <p><b>Calendar Link</b>: <a href="{{ page.calendar_link }}">Add to Calendar</a></p> -->
-        {% if page.event_images and page.event_images.size > 0 %}
-            <div class="post-gallery">
-                <h2>Gallery</h2>
-                <div class="post-gallery-grid">
-                    {% for image in page.event_images %}
-                        <div class="post-gallery-item">
-                            <picture>
-                                <img class="post-gallery-thumbnail announcement-img-lightbox"
-                                     src="{{ image.thumbnail_url }}"
-                                     alt="{{ image.alt_text }}"
-                                     {% if forloop.index > 3 %}loading="lazy"{% endif %}
-                                     data-full-image="{{ image.original_url }}"
-                                     data-image-order="{{ image.order }}"
-                                     style="height: 11rem;
-                                            width: auto;
-                                            object-fit: cover" />
-                            </picture>
-                            {% if image.caption and image.caption != "" %}<p class="post-gallery-caption">{{ image.caption }}</p>{% endif %}
-                        </div>
-                    {% endfor %}
+        {% if page.event_flyer %}
+            <div class="event-flyer">
+                <h2>Event Flyer</h2>
+                <div style="width:fit-content; margin: 0rem auto;">
+                    <picture style="margin: auto 0rem;">
+                        <img class="event-flyer-image announcement-img-lightbox"
+                             src="{{ page.event_flyer.thumbnail_url | default: page.event_flyer.original_url }}"
+                             alt="{{ page.event_flyer.alt_text | default: 'Event flyer' }}"
+                             data-full-image="{{ page.event_flyer.original_url | default: page.event_flyer.thumbnail_url }}"
+                             style="height: auto;
+                                    max-width: 70vw" />
+                    </picture>
                 </div>
             </div>
         {% endif %}
