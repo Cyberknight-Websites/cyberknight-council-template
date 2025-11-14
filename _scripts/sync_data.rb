@@ -54,15 +54,23 @@ begin
       /^_|_$/, ''
     )
     filename = "_events/#{event_start_time_localized.strftime('%Y-%m-%d')}-#{sanitized_event_name}.md"
-    location_address_str = escape_html_for_yaml(event['location_address'])
-    # location_address_name_str = location_address_str.split(',').map(&:strip)[0...-4].join(', ').gsub('"', '')
-    location_address_array = location_address_str.split(',').map(&:strip)
-    if location_address_array.length == 4
-      location_address_name_str = location_address_array[0...-2].join(', ').gsub('"', '')
-    elsif location_address_array.length > 4
-      location_address_name_str = location_address_array[0...-3].join(', ').gsub('"', '')
+    location_address_original = event['location_address'] || ''
+    location_address_str = escape_html_for_yaml(location_address_original)
+    # Split strictly on commas, trim whitespace, ignore empty parts
+    parts = location_address_original.split(',').map(&:strip).reject { |p| p.nil? || p.empty? }
+    if parts.length <= 2
+      # 2 or fewer parts: return as-is
+      location_address_name_str = parts.join(', ')
+    elsif parts.length == 3
+      # exactly 3 parts: drop the final part (usually state/postal)
+      location_address_name_str = parts[0..1].join(', ')
+    else
+      # 4 or more parts: drop the last two parts (usually state and country)
+      location_address_name_str = parts[0...-2].join(', ')
     end
-    location_address_nospace_str = location_address_str.gsub('"', '').gsub(' ', '+')
+    # Remove any lingering double quotes just in case
+    location_address_name_str = location_address_name_str.gsub('"', '')
+    location_address_nospace_str = location_address_original.gsub('"', '').gsub(' ', '+')
     location_map_link_str = "http://maps.apple.com/?near=#{event['location_coordinates'][0]},#{event['location_coordinates'][1]}&q=#{location_address_nospace_str}"
     File.open(filename, 'w') do |file|
       file.puts '---'
