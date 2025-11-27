@@ -48,7 +48,6 @@ begin
     event_timezone = event['timezone'] || website_tz
     tz_cache[event_timezone] ||= TZInfo::Timezone.get(event_timezone)
     event_tz = tz_cache[event_timezone]
-
     event_start_time_localized = event_tz.to_local(Time.at(event['event_start_time']))
     sanitized_event_name = event['event_name'].downcase.gsub(/[^a-z0-9\s]/, '').gsub(/\s+/, '_').gsub(/_+/, '_').gsub(
       /^_|_$/, ''
@@ -76,6 +75,7 @@ begin
       file.puts '---'
       file.puts 'layout: event'
       file.puts "title: #{escape_html_for_yaml(event['event_name'])}"
+      file.puts "event_id: \"#{event['event_id']}\""
       file.puts "event_name: #{escape_html_for_yaml(event['event_name'])}"
       # file.puts "event_description: #{escape_html_for_yaml(event['event_description'])}"
       file.puts "event_details: #{escape_html_for_yaml(event['event_details'])}"
@@ -143,6 +143,7 @@ begin
       file.puts '---'
       file.puts 'layout: post'
       file.puts "title: \"#{post['post_title']}\""
+      file.puts "post_id: \"#{post['post_id']}\""
       file.puts 'permalink: /posts/:year/:month/:slug'
       file.puts "post_created_at: #{post_created_at_unixtime}"
       file.puts "post_created_by: \"#{post_created_by}\""
