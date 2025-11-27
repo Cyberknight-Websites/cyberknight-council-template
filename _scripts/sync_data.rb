@@ -93,6 +93,8 @@ begin
       file.puts "location_gps_coordinates_lon: #{event['location_coordinates'][1]}"
       file.puts "event_last_updated: #{event['event_last_updated']}"
 
+      file.puts "permalink: /events/#{event['event_id']}"
+
       if event['event_flyer'].is_a?(Hash) && !event['event_flyer'].empty?
         flyer = event['event_flyer']
         file.puts 'event_flyer:'
@@ -144,7 +146,7 @@ begin
       file.puts 'layout: post'
       file.puts "title: \"#{post['post_title']}\""
       file.puts "post_id: \"#{post['post_id']}\""
-      file.puts 'permalink: /posts/:year/:month/:slug'
+      file.puts "permalink: /posts/#{post['post_id']}"
       file.puts "post_created_at: #{post_created_at_unixtime}"
       file.puts "post_created_by: \"#{post_created_by}\""
       file.puts "post_last_edited_at: #{post_last_edited_at_unixtime}"
@@ -215,6 +217,8 @@ begin
 
         # Include author if it exists
         file.puts "author: #{escape_html_for_yaml(announcement['author'])}" if announcement['author']
+
+        file.puts "permalink: /announcements/#{announcement['announcement_id']}"
 
         file.puts '---'
       end
