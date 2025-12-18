@@ -244,7 +244,7 @@ begin
     config_content = File.read(config_path)
 
     council_site_url = all_council_info_data['council_website_settings']['website_url']
-    updated_content = config_content.gsub(/COUNCIL_SITE_URL/, council_site_url)
+    updated_content = config_content.gsub(/^url: .*$/, "url: #{council_site_url}")
 
     File.write(config_path, updated_content)
     puts "Updated #{config_path}"
