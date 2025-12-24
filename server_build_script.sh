@@ -1,4 +1,15 @@
-#!/bin/sh
+#!/bin/bash
+
+# Set up logging
+LOG_DIR="/home/julian/logs/cyberknight-council-template"
+mkdir -p "$LOG_DIR"
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+LOG_FILE="$LOG_DIR/build_${TIMESTAMP}.log"
+
+# Redirect all output to log file (and still show in stdout)
+exec > >(tee -a "$LOG_FILE") 2>&1
+
+echo "=== Build started at $(date) ==="
 
 # parse arguments KEY=VALUE
 while [ $# -gt 0 ]; do
@@ -30,6 +41,11 @@ if [ -z "$COUNCIL_NUMBER" ]; then
   exit 1
 fi
 
+echo "Building council: $COUNCIL_NUMBER"
+echo "JEKYLL_DIR: $JEKYLL_DIR"
+echo "NGINX_DIR: $NGINX_DIR"
+echo "JEKYLL_BUILDER_IMAGE: $JEKYLL_BUILDER_IMAGE"
+
 # Remove JEKYLL_DIR if it exists and create a new one
 if [ -d "$JEKYLL_DIR" ]; then
   rm -rf $JEKYLL_DIR
@@ -42,3 +58,5 @@ mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec ruby /srv/jekyll/_scripts/sync_data.rb --council $COUNCIL_NUMBER --url https://secure.cyberknight-websites.com
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec jekyll build
 cp -r $JEKYLL_DIR/_site/* $NGINX_DIR/council-$COUNCIL_NUMBER
+
+echo "=== Build completed at $(date) ==="
