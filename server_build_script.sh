@@ -49,21 +49,52 @@ echo "NGINX_DIR: $NGINX_DIR"
 echo "JEKYLL_BUILDER_IMAGE: $JEKYLL_BUILDER_IMAGE"
 
 # Remove JEKYLL_DIR if it exists and create a new one
+STEP_START=$(date +%s)
 if [ -d "$JEKYLL_DIR" ]; then
   rm -rf $JEKYLL_DIR
 fi
 mkdir -p $JEKYLL_DIR
+CLEANUP_TIME=$(($(date +%s) - STEP_START))
+
+# Git clone
+echo "Cloning repository..."
+STEP_START=$(date +%s)
 git clone https://github.com/Cyberknight-Websites/cyberknight-council-template.git $JEKYLL_DIR
+CLONE_TIME=$(($(date +%s) - STEP_START))
+
 cd $JEKYLL_DIR
 rm -rf $NGINX_DIR/council-$COUNCIL_NUMBER
 mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
+
+# Sync council data
+echo "Syncing council data..."
+STEP_START=$(date +%s)
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec ruby /srv/jekyll/_scripts/sync_data.rb --council $COUNCIL_NUMBER --url https://secure.cyberknight-websites.com
+SYNC_TIME=$(($(date +%s) - STEP_START))
+
+# Jekyll build
+echo "Building Jekyll site..."
+STEP_START=$(date +%s)
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec jekyll build
+BUILD_TIME=$(($(date +%s) - STEP_START))
+
+# Copy to nginx
+echo "Copying files to nginx directory..."
+STEP_START=$(date +%s)
 cp -r $JEKYLL_DIR/_site/* $NGINX_DIR/council-$COUNCIL_NUMBER
+COPY_TIME=$(($(date +%s) - STEP_START))
 
 # Calculate build duration
 END_TIME=$(date +%s)
 DURATION=$((END_TIME - START_TIME))
 
+echo ""
 echo "=== Build completed at $(date) ==="
 echo "=== Total build time: ${DURATION} seconds ==="
+echo ""
+echo "Step-by-step breakdown:"
+echo "  1. Cleanup directories:     ${CLEANUP_TIME}s"
+echo "  2. Git clone repository:    ${CLONE_TIME}s"
+echo "  3. Sync council data:       ${SYNC_TIME}s"
+echo "  4. Jekyll build:            ${BUILD_TIME}s"
+echo "  5. Copy to nginx:           ${COPY_TIME}s"
