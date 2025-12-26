@@ -59,7 +59,7 @@ CLEANUP_TIME=$(($(date +%s) - STEP_START))
 # Git clone
 echo "Cloning repository..."
 STEP_START=$(date +%s)
-git clone https://github.com/Cyberknight-Websites/cyberknight-council-template.git $JEKYLL_DIR
+git clone --depth 1 https://github.com/Cyberknight-Websites/cyberknight-council-template.git $JEKYLL_DIR
 CLONE_TIME=$(($(date +%s) - STEP_START))
 
 cd $JEKYLL_DIR
