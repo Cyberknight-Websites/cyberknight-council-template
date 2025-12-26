@@ -68,8 +68,6 @@ git clone --depth 1 https://github.com/Cyberknight-Websites/cyberknight-council-
 CLONE_TIME=$(perl -e "printf '%.2f', $(get_timestamp) - $STEP_START")
 
 cd $JEKYLL_DIR
-rm -rf $NGINX_DIR/council-$COUNCIL_NUMBER
-mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
 
 # Sync council data
 echo "Syncing council data..."
@@ -100,6 +98,8 @@ fi
 # Copy to nginx
 echo "Copying files to nginx directory..."
 STEP_START=$(get_timestamp)
+rm -rf $NGINX_DIR/council-$COUNCIL_NUMBER
+mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
 cp -r $JEKYLL_DIR/_site/* $NGINX_DIR/council-$COUNCIL_NUMBER
 COPY_TIME=$(perl -e "printf '%.2f', $(get_timestamp) - $STEP_START")
 
