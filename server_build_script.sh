@@ -9,6 +9,8 @@ LOG_FILE="$LOG_DIR/build_${TIMESTAMP}.log"
 # Redirect all output to log file (and still show in stdout)
 exec > >(tee -a "$LOG_FILE") 2>&1
 
+# Capture start time
+START_TIME=$(date +%s)
 echo "=== Build started at $(date) ==="
 
 # parse arguments KEY=VALUE
@@ -59,4 +61,9 @@ docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec jekyll build
 cp -r $JEKYLL_DIR/_site/* $NGINX_DIR/council-$COUNCIL_NUMBER
 
+# Calculate build duration
+END_TIME=$(date +%s)
+DURATION=$((END_TIME - START_TIME))
+
 echo "=== Build completed at $(date) ==="
+echo "=== Total build time: ${DURATION} seconds ==="
