@@ -70,13 +70,17 @@ mkdir -p $NGINX_DIR/council-$COUNCIL_NUMBER
 echo "Syncing council data..."
 STEP_START=$(date +%s)
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec ruby /srv/jekyll/_scripts/sync_data.rb --council $COUNCIL_NUMBER --url https://secure.cyberknight-websites.com
+DOCKER_EXIT_CODE=$?
 SYNC_TIME=$(($(date +%s) - STEP_START))
+echo "  → Sync completed with exit code $DOCKER_EXIT_CODE in ${SYNC_TIME}s"
 
 # Jekyll build
 echo "Building Jekyll site..."
 STEP_START=$(date +%s)
 docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_IMAGE bundler exec jekyll build
+DOCKER_EXIT_CODE=$?
 BUILD_TIME=$(($(date +%s) - STEP_START))
+echo "  → Build completed with exit code $DOCKER_EXIT_CODE in ${BUILD_TIME}s"
 
 # Copy to nginx
 echo "Copying files to nginx directory..."
