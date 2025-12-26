@@ -74,6 +74,11 @@ DOCKER_EXIT_CODE=$?
 SYNC_TIME=$(($(date +%s) - STEP_START))
 echo "  → Sync completed with exit code $DOCKER_EXIT_CODE in ${SYNC_TIME}s"
 
+if [ $DOCKER_EXIT_CODE -ne 0 ]; then
+  echo "ERROR: Data sync failed. Aborting build."
+  exit 1
+fi
+
 # Jekyll build
 echo "Building Jekyll site..."
 STEP_START=$(date +%s)
@@ -81,6 +86,11 @@ docker run --rm -v $JEKYLL_DIR:/srv/jekyll -u $(id -u):$(id -g) $JEKYLL_BUILDER_
 DOCKER_EXIT_CODE=$?
 BUILD_TIME=$(($(date +%s) - STEP_START))
 echo "  → Build completed with exit code $DOCKER_EXIT_CODE in ${BUILD_TIME}s"
+
+if [ $DOCKER_EXIT_CODE -ne 0 ]; then
+  echo "ERROR: Jekyll build failed. Aborting deployment."
+  exit 1
+fi
 
 # Copy to nginx
 echo "Copying files to nginx directory..."

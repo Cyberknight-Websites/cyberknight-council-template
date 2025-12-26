@@ -24,7 +24,7 @@ begin
 
   api_start = Time.now
   all_council_info_api_url = "#{kocp_url}/public_api/get_all_council_info/#{council_number}"
-  all_council_info_api_response = URI.open(all_council_info_api_url).read
+  all_council_info_api_response = URI.open(all_council_info_api_url, read_timeout: 10, open_timeout: 5).read
   all_council_info_data = JSON.parse(all_council_info_api_response)
   api_duration = Time.now - api_start
 
@@ -259,5 +259,7 @@ begin
   total_duration = Time.now - script_start_time
   puts "\n=== sync_data.rb completed in #{total_duration.round(2)}s ==="
 rescue StandardError => e
-  puts "An error occurred: #{e.message}"
+  puts "ERROR: sync_data.rb failed: #{e.message}"
+  puts e.backtrace.first(5).join("\n") if e.backtrace
+  exit 1
 end
